@@ -1,0 +1,429 @@
+/* Configuraciones básicas */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--fondoBody);
+    background-size: cover;
+    color: var(--textoColor);
+    transition: background 0.3s, color 0.3s;
+    background-attachment: fixed;
+}
+
+* {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+/* Centrar el contenedor de registro e inicio de sesión */
+.contBody {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding-top: 80px;
+}
+
+/* Contenedores de registro e inicio de sesión */
+.contRegIn {
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    border-radius: 50px;
+    width: 370px;
+    height: auto;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    background-color: var(--fondoRegIn);
+    color: var(--textoColor);
+}
+
+/* Ingresos de texto */
+input {
+    margin: 7px;
+    height: 25px;
+    width: 220px;
+    background-color: var(--fondoInput);
+    color: var(--textoInput);
+    border: none;
+    box-shadow: 0 0 15px var(--colorSombra);
+}
+
+/* Para que no se cambie el campo de color al autorellenar */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--fondoInput) inset, 0 0 15px var(--colorSombra);
+    -webkit-text-fill-color: var(--textoInput) !important;
+    caret-color: var(--textoInput) !important;
+    transition: background-color 0s ease-in-out 9999s;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--fondoInput) inset, 0 0 15px var(--colorSombra);
+    -webkit-text-fill-color: var(--textoInput) !important;
+    caret-color: var(--textoInput) !important;
+}
+
+/* Botón registrarse/ingresar */
+input[type="submit"] {
+    border: none;
+    border-radius: 30px;
+    height: 50px;
+    width: 150px;
+    font-size: large;
+    transition: 0.3s;
+    background-color: var(--fondoBoton);
+    color: var(--textoBoton);
+}
+
+input[type="submit"]:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Ocultar estilo por defecto del checkbox */
+.recordarme input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 0;
+    cursor: pointer;
+    position: relative;
+    background-color: #fff;
+    bottom: 2px;
+    right: 12px;
+}
+
+/* Fondo y check cuando está marcado */
+.recordarme input[type="checkbox"]:checked {
+    background-color: var(--fondoBoton);
+}
+
+/* Palomita del check */
+.recordarme input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--textoBoton);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+a {
+    color: var(--aTextoColor);
+}
+
+.modoContainer {
+    position: absolute;
+    display: flex;
+    gap: 15px;
+    background-color: var(--fondoRegIn);
+    margin: 15px;
+    padding: 10px;
+    border-radius: 40px;
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra);
+}
+
+.modoIcono {
+    text-align: center;
+    font-size: 18px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra);
+    background-color: var(--fondoBotonModo);
+    transition: 0.3s;
+    color: #aaa;
+}
+
+.modoIcono.activo {
+    color: #333;
+    transform: scale(1.2);
+}
+
+body.dark .modoIcono {
+    color: #777;
+}
+
+body.dark .modoIcono.activo {
+    color: #fff;
+}
+
+/* ------------- Header ------------- */
+
+header {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 89px;
+    top: 0;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+}
+
+.logoC {
+    position: absolute;
+    display: flex;
+    z-index: 100;
+    left: 0;
+    height: 120%;
+    width: 10%;
+    background-color: var(--fondoRegIn);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    border-bottom-right-radius: 100px;
+}
+
+.botonesIn {
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 1;
+    display: flex;
+    position: relative;
+    height: 70%;
+    width: 100%;
+    background-color: var(--fondoHeader);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+}
+
+.cuentaC {
+    position: absolute;
+    display: flex;
+    z-index: 100;
+    right: 0;
+    width: 10%;
+    height: 120%;
+    background-color: var(--fondoRegIn);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    border-bottom-left-radius: 100px;
+}
+
+.b1 {
+    font-size: large;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 20px;
+    color: var(--textoColor);
+    transition: 0.3s;
+    position: relative;
+    text-decoration: none;
+}
+
+.b1:hover {
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.b1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--textoColor);
+    transition: width 0.3s ease;
+}
+
+.b1:hover::after {
+    width: 100%;
+}
+
+.cuentaLogo {
+    color: var(--textoColor);
+    background: var(--cuentaBoton);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra);
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    height: 72px;
+    width: 72px;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: 0.3s;
+}
+
+.cuentaLogo:hover {
+    transform: scale(0.9);
+}
+
+/* ------------- Contenedor de los datos de la cuenta ------------- */
+
+/* Boton "x" para cerrar */
+.cerrarMenu {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    font-size: 34px;
+    font-weight: bold;
+    color: var(--subrayado);
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s;
+    z-index: 9999;
+}
+
+.cerrarMenu:hover {
+    color: red;
+}
+
+.cuentaCont {
+    position: fixed;
+    display: flex;
+    right: 105px;
+    top: 105px;
+}
+
+.cuentaDatosCss {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.7);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative;
+    right: 0;
+    top: 100%;
+    background-color: var(--fondoRegIn);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    border-radius: 50px 0 50px 50px;
+    padding: 20px 40px 40px 40px;
+    z-index: 100;
+    width: 280px;
+    height: 500px;
+}
+
+/* Cuando está visible */
+.cuentaDatosCss.activo {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.cuentaDatosCss input, .cuentaDatosCss button {
+    display: block;
+    width: 100%;
+}
+
+.espaciar {
+    padding-bottom: 2px;
+}
+
+/* Centrar titulo */
+.cent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Centrar botones */
+.cent2 {
+    width: 200px;
+    display: inline;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    position: absolute;
+    top: 220px;
+    left: 74px;
+    margin-top: 30px;
+}
+
+/* Centrar modos */
+.cent3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    bottom: 62px;
+    left: 182px;
+}
+
+.subrayado {
+    border-bottom: 1px solid var(--subrayado);
+    padding-bottom: 2px;
+}
+
+/* ------------- Sección presentación ------------- */
+
+.presentacion {
+    display: inline;
+    position: relative;
+    top: 89px;
+}
+
+/* ------------- Crear variables para modos claro y oscuro ------------- */
+
+/* Variables del modo claro */
+:root {
+    --fondoBody: url(../img/fondo_claro.jpg);
+    --textoColor: black;
+
+    --fondoHeader: #f9f9f9;
+
+    --fondoRegIn: #f3f3f3;
+    --colorSombra: lightgray;
+
+    --fondoBoton: rgb(0, 80, 0);
+    --textoBoton: white;
+
+    --fondoBotonModo: #f5f5f5;
+    --textoBotonModo: black;
+
+    --aTextoColor: rgb(0, 80, 0);
+
+    --fondoInput: white;
+    --textoInput: black;
+
+    --cuentaBoton: url(../img/cuenta_claro.jpg);
+
+    --subrayado: lightgray;
+}
+
+/* Variables del modo oscuro */
+body.dark {
+    --fondoBody: url(../img/fondo_oscuro.jpg);
+    --textoColor: white;
+
+    --fondoHeader: #171717;
+
+    --fondoRegIn: #1e1e1e;
+    --colorSombra: black;
+
+    --fondoBoton: rgb(180, 255, 180);
+    --textoBoton: black;
+
+    --fondoBotonModo: #171717;
+    --textoBotonModo: white;
+
+    --aTextoColor: rgb(180, 255, 180);
+
+    --fondoInput: #2a2a2a;
+    --textoInput: white;
+
+    --cuentaBoton: url(../img/cuenta_oscuro.jpg);
+
+    --subrayado: rgb(78, 78, 78);
+}
