@@ -21,14 +21,16 @@ class Usuario
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
-        if ($stmt->error) {
+        if ($stmt->error)
+        {
             return ['message' => 'Error en la lectura'];
         }
 
         $res = $stmt->get_result();
         $data_arr = [];
 
-        while ($data = $res->fetch_assoc()) {
+        while ($data = $res->fetch_assoc())
+        {
             $data_arr[] = $data;
         }
 
@@ -90,7 +92,8 @@ class Usuario
         $stmt->bind_param('i', $id);
         $stmt->execute();
 
-        if ($stmt->error) {
+        if ($stmt->error)
+        {
             return ['message' => 'Error al eliminar'];
         }
 

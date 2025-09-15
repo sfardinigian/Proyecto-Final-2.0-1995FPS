@@ -43,7 +43,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 
     <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
 
-    <link rel="icon" href="img/logo_mini.png" type="image/x-icon">
+    <link rel="icon" href="img/logo_minip.png" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,6 +89,19 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
                             break;
                         case 'desconocido':
                             echo "Ha ocurrido un error desconocido.<br><br>";
+                            break;
+                    }
+                    ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['ok'])): ?>
+                <div style="color:green;">
+                    <?php
+                    switch ($_GET['ok'])
+                    {
+                        case 'cuentaEliminada':
+                            echo "¡Cuenta eliminada con éxito!<br><br>";
                             break;
                     }
                     ?>

@@ -12,25 +12,25 @@ class usuarioController
     public function crearUsuario($data)
     {
         // Validación de nombre
-        if (!preg_match('^[a-zA-Z-áéíóúÁÉÍÓÚñÑüÜ\s]+$^', $data['nombre'])) {
+        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $data['nombre'])) {
             header('Location: ../index.php?error=nombre');
             exit;
         }
 
         // Validación de apellido
-        if (!preg_match('^[a-zA-Z-áéíóúÁÉÍÓÚñÑüÜ\s]+$^', $data['apellido'])) {
+        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $data['apellido'])) {
             header('Location: ../index.php?error=apellido');
             exit;
         }
 
         // Validación de e-mail
-        if (!preg_match('^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$^', $data['email'])) {
+        if (!preg_match('/^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$/', $data['email'])) {
             header('Location: ../index.php?error=email');
             exit;
         }
 
         // Validación de contraseña
-        if (!preg_match('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$^', $data['pass'])) {
+        if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/', $data['pass'])) {
             header('Location: ../index.php?error=pass');
             exit;
         }

@@ -24,7 +24,7 @@ if (!isset($_SESSION['usuario']))
 
     <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
 
-    <link rel="icon" href="../img/logo_mini.png" type="image/x-icon">
+    <link rel="icon" href="../img/logo_minip.png" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

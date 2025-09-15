@@ -6,14 +6,14 @@ class modifController
     public function modificarUsuario($id, $data)
     {
         // Validación de nombre
-        if (!preg_match('^[a-zA-Z-áéíóúÁÉÍÓÚñÑüÜ\s]+$^', $data['nombre']))
+        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $data['nombre']))
         {
             header('Location: ../views/modif.php?error=nombre');
             exit;
         }
 
         // Validación de apellido
-        if (!preg_match('^[a-zA-Z-áéíóúÁÉÍÓÚñÑüÜ\s]+$^', $data['apellido']))
+        if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $data['apellido']))
         {
             header('Location: ../views/modif.php?error=apellido');
             exit;
@@ -46,7 +46,7 @@ class modifController
             }
 
             // Validación de contraseña
-            if (!preg_match('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$^', $data['passNueva'])){
+            if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/', $data['passNueva'])){
                 header('Location: ../views/modif.php?error=pass');
                 exit;
             }
