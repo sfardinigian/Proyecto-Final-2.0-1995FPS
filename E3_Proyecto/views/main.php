@@ -52,6 +52,8 @@ $usuarioSesion = $_SESSION['usuario'];
             <a href="#actividades" class="b1"><i class="fa-solid fa-bars"></i> Actividades</a>
             <a href="#graficos" class="b1"><i class="fa-solid fa-chart-simple"></i> Gráficos</a>
             <a href="#recordatorios" class="b1"><i class="fa-solid fa-bell"></i> Recordatorios</a>
+
+            <a class="b2" id="botonMenu"><i class="fa-solid fa-bars"></i></a>
         </div>
 
         <div class="cuentaC">

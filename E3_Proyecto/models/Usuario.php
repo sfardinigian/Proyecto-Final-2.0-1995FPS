@@ -68,7 +68,7 @@ class Usuario
         return ['message' => '¡Usuario registrado con éxito!'];
     }
 
-    // UPDATE - Editar usuario
+    // UPDATE - Modificar usuario
     public function update($id, $data)
     {
         $query = "UPDATE usuarios SET nombre=?, apellido=?, pass=? WHERE id_usuario=?";
@@ -102,7 +102,7 @@ class Usuario
 
     // ------------------------------ Consultas independientes del proyecto ------------------------------
 
-    // MODIFICACIÓN: Obtener usuario por ID
+    // MODIFICACIÓN - Obtener usuario por ID
     public function getById($id)
     {
         $query = "SELECT * FROM usuarios WHERE id_usuario = ?";

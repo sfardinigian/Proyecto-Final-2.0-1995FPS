@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-09-2025 a las 23:33:04
+-- Tiempo de generación: 19-09-2025 a las 23:40:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `actividades` (
   `id_actividad` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `titulo` varchar(100) NOT NULL,
+  `prioridad` varchar(100) NOT NULL,
   `fecha_inicio` datetime NOT NULL,
   `fecha_fin` datetime NOT NULL,
   `color` varchar(20) NOT NULL DEFAULT '#000000'

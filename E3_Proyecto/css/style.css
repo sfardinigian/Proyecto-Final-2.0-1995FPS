@@ -192,6 +192,12 @@ header {
     box-shadow: 0 0 5px var(--colorSombra) inset, 0 0 15px var(--colorSombra) inset, 0 0 30px var(--colorSombra) inset;
     top: 10px;
     left: 10px;
+    transition: 0.3s;
+}
+
+.logoPrincipal:hover {
+    rotate: 360deg;
+    transition: 1s;
 }
 
 .logoC {
@@ -205,6 +211,7 @@ header {
     box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
     border-bottom-right-radius: 100px;
     backdrop-filter: blur(7px);
+    transition: 0.3s;
 }
 
 .botonesIn {
@@ -219,6 +226,7 @@ header {
     background-color: var(--fondoHeader);
     box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
     backdrop-filter: blur(7px);
+    transition: 0.3s;
 }
 
 .cuentaC {
@@ -232,6 +240,7 @@ header {
     box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
     border-bottom-left-radius: 100px;
     backdrop-filter: blur(7px);
+    transition: 0.3s;
 }
 
 .b1 {
@@ -264,6 +273,40 @@ header {
 }
 
 .b1:hover::after {
+    width: 100%;
+}
+
+.b2 {
+    font-size: large;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 20px 20px;
+    color: var(--textoColor);
+    transition: 0.3s;
+    position: relative;
+    text-decoration: none;
+    display: none;
+}
+
+.b2:hover {
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: var(--aTextoColor);
+}
+
+.b2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--aTextoColor);
+    transition: width 0.3s ease;
+}
+
+.b2:hover::after {
     width: 100%;
 }
 
@@ -310,9 +353,10 @@ header {
 .cuentaCont {
     position: fixed;
     display: flex;
-    right: 105px;
-    top: 105px;
+    right: 85px;
+    top: 85px;
     z-index: 10000;
+    transition: 0.3s;
 }
 
 .cuentaDatosCss {
@@ -340,7 +384,8 @@ header {
     pointer-events: auto;
 }
 
-.cuentaDatosCss input, .cuentaDatosCss button {
+.cuentaDatosCss input,
+.cuentaDatosCss button {
     display: block;
     width: 100%;
 }
@@ -387,7 +432,7 @@ header {
     padding-bottom: 2px;
 }
 
-/* Header invisible de soporte */
+/* Separación del header invisible de soporte */
 
 .contInv {
     display: flex;
@@ -401,7 +446,7 @@ header {
 
 .contenidos {
     display: inline;
-    margin: 70px 10% 25px 10%;
+    margin: 70px 8% 25px 8%;
     border-radius: 50px;
     box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
 }
@@ -416,6 +461,7 @@ header {
     position: relative;
     text-shadow: 0 0 25px rgb(180, 255, 180);
     text-align: center;
+    transition: 0.3s;
 }
 
 .contenidos1::after {
@@ -431,6 +477,7 @@ header {
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
     backdrop-filter: blur(7px);
+    transition: 0.3s;
 }
 
 .contenidos2 li {
@@ -462,7 +509,8 @@ td {
     text-align: center;
 }
 
-td:last-child, th:last-child {
+td:last-child,
+th:last-child {
     border-right: none;
 }
 
@@ -482,7 +530,7 @@ td:last-child, th:last-child {
 /* Recordatorios */
 
 #recordatorios {
-    scroll-margin-top: 140px;    
+    scroll-margin-top: 140px;
 }
 
 /* ------------- Crear variables para modos claro y oscuro ------------- */
@@ -541,4 +589,68 @@ body.dark {
     --cuentaBoton: url(../img/cuenta_oscuro.jpg);
 
     --subrayado: rgb(78, 78, 78);
+}
+
+/* ------------- Responsive para celulares ------------- */
+
+@media (max-width: 576px) {
+
+    /* Elementos del header */
+    .logoPrincipal {
+        height: 65px;
+        width: 65px;
+        top: 10px;
+        left: 10px;
+    }
+
+    .logoC {
+        height: 100px;
+        width: 100px;
+        border-bottom-right-radius: 80px;
+    }
+
+    .cuentaC {
+        width: 100px;
+        height: 100px;
+        border-bottom-left-radius: 80px;
+    }
+
+    .cuentaLogo {
+        height: 65px;
+        width: 65px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .b1 {
+        display: none;
+    }
+
+    .b2 {
+        display: flex;
+    }
+
+    /* Menú de celulares */
+    .menuDatos {
+        display: flex;
+    }
+
+    .botonesIn {
+        height: 80%;
+    }
+
+    /* Contenedor de datos de la cuenta */
+    .cuentaCont {
+        right: 30px;
+        top: 80px;
+    }
+
+    /* Contenedores de actividades */
+    .contenidos1 {
+        padding: 7px 30px 15px 25px;
+    }
+
+    .contenidos2 {
+        padding: 1px 30px 30px 25px;
+    }
 }
