@@ -16,9 +16,8 @@ class db
 
     public function connect()
     {
-        $connection = new mysqli($this->host, $this->user, $this->password, $this->dbName) or die ("Error en la conexión.");
+        $connection = new mysqli($this->host, $this->user, $this->password, $this->dbName) or die("Error en la conexión.");
 
         return $connection;
     }
 }
-?>

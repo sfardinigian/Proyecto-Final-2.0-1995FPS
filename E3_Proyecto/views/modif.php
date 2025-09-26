@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['usuario']))
-{
+if (!isset($_SESSION['usuario'])) {
     header('Location: inicio.php?error=sesion');
     exit;
 }
@@ -16,8 +15,7 @@ if (!isset($_SESSION['usuario']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
-        if (localStorage.getItem("theme") === "dark")
-        {
+        if (localStorage.getItem("theme") === "dark") {
             document.documentElement.classList.add("dark");
         }
     </script>
@@ -40,7 +38,7 @@ if (!isset($_SESSION['usuario']))
         <span id="iconoSol" class="modoIcono">☀︎</span>
         <span id="iconoLuna" class="modoIcono">🌙︎</span>
     </div>
-    
+
     <div class="contBody">
         <div class="contRegIn">
             <h1>Modificación</h1>
@@ -48,8 +46,7 @@ if (!isset($_SESSION['usuario']))
             <?php if (isset($_GET['error'])): ?>
                 <div style="color:red;">
                     <?php
-                    switch ($_GET['error'])
-                    {
+                    switch ($_GET['error']) {
                         case 'nombre':
                             echo "El nombre sólo debe tener letras.<br><br>";
                             break;

@@ -36,8 +36,7 @@ class usuarioController
         }
 
         // Que coincidan las contraseñas
-        if ($data['pass'] !== $data['pass2'])
-        {
+        if ($data['pass'] !== $data['pass2']) {
             header('Location: ../index.php?error=passNoCoincide');
             exit;
         }
@@ -50,26 +49,20 @@ class usuarioController
         $resultado = $usuario->create($data);
 
         // Verificamos que el usuario sea único
-        if ($resultado === true)
-        {
+        if ($resultado === true) {
             header('Location: ../views/inicio.php?ok=registro');
             exit;
-        }
-        elseif ($resultado === "emailExiste")
-        {
+        } elseif ($resultado === "emailExiste") {
             header('Location: ../index.php?error=emailExiste');
             exit;
-        }
-        else
-        {
+        } else {
             header('Location: ../index.php?error=desconocido');
             exit;
         }
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar']))
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar'])) {
     $controller = new usuarioController();
     $controller->crearUsuario($_POST);
 }

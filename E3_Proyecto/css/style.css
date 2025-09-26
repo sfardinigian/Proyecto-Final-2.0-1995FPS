@@ -492,6 +492,11 @@ header {
 
 /* Lista de actividades */
 
+.tablaCont {
+    display: flex;
+    flex-direction: row;
+}
+
 table {
     width: 100%;
     table-layout: fixed;
@@ -593,7 +598,7 @@ body.dark {
 
 /* ------------- Responsive para celulares ------------- */
 
-@media (max-width: 576px) {
+@media (max-width: 676px) {
 
     /* Elementos del header */
     .logoPrincipal {
@@ -628,11 +633,7 @@ body.dark {
 
     .b2 {
         display: flex;
-    }
-
-    /* Menú de celulares */
-    .menuDatos {
-        display: flex;
+        padding: 20px 5px;
     }
 
     .botonesIn {
@@ -652,5 +653,10 @@ body.dark {
 
     .contenidos2 {
         padding: 1px 30px 30px 25px;
+    }
+
+    /* Listado de actividades */
+    .tablaCont {
+        flex-direction: column;
     }
 }

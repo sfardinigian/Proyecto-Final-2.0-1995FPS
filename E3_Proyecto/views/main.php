@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['usuario']))
-{
+if (!isset($_SESSION['usuario'])) {
     header('Location: inicio.php?error=sesion');
     exit;
 }
@@ -20,8 +19,7 @@ $usuarioSesion = $_SESSION['usuario'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
-        if (localStorage.getItem("theme") === "dark")
-        {
+        if (localStorage.getItem("theme") === "dark") {
             document.documentElement.classList.add("dark");
         }
     </script>
@@ -49,11 +47,14 @@ $usuarioSesion = $_SESSION['usuario'];
 
         <div class="botonesIn">
             <a href="#inicio" class="b1"><i class="fa-solid fa-house"></i> Inicio</a>
-            <a href="#actividades" class="b1"><i class="fa-solid fa-bars"></i> Actividades</a>
+            <a href="#actividades" class="b1"><i class="fa-solid fa-clipboard-list"></i></i> Actividades</a>
             <a href="#graficos" class="b1"><i class="fa-solid fa-chart-simple"></i> Gráficos</a>
             <a href="#recordatorios" class="b1"><i class="fa-solid fa-bell"></i> Recordatorios</a>
 
-            <a class="b2" id="botonMenu"><i class="fa-solid fa-bars"></i></a>
+            <a href="#inicio" class="b2"><i class="fa-solid fa-house"></i></a>
+            <a href="#actividades" class="b2"><i class="fa-solid fa-clipboard-list"></i></i></a>
+            <a href="#graficos" class="b2"><i class="fa-solid fa-chart-simple"></i></a>
+            <a href="#recordatorios" class="b2"><i class="fa-solid fa-bell"></i></a>
         </div>
 
         <div class="cuentaC">
@@ -125,21 +126,43 @@ $usuarioSesion = $_SESSION['usuario'];
 
         <div class="contenidos" id="actividades">
             <section class="contenidos1">
-                <h1>Listado de actividades <i class="fa-solid fa-clipboard-list"></i></h1>
+                <h1>Listado de actividades <i class="fa-solid fa-bars-staggered"></i></h1>
             </section>
             <section class="contenidos2">
-                <table>
-                    <tr>
-                        <th><h3>Casuales 🟢</h3></th>
-                        <th><h3>Normales 🟡</h3></th>
-                        <th><h3>Importantes 🔴</h3></th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
-                </table>
+                <div class="tablaCont">
+                    <table>
+                        <tr>
+                            <th>
+                                <h3 style="color: rgb(0, 153, 0);">Casuales</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <th>
+                                <h3 style="color: orange;">Normales</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <th>
+                                <h3 style="color: red;">Importantes</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                        </tr>
+                    </table>
+                </div>
             </section>
         </div>
 

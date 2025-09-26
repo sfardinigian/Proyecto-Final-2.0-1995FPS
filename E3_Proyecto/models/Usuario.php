@@ -21,16 +21,14 @@ class Usuario
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
-        if ($stmt->error)
-        {
+        if ($stmt->error) {
             return ['message' => 'Error en la lectura'];
         }
 
         $res = $stmt->get_result();
         $data_arr = [];
 
-        while ($data = $res->fetch_assoc())
-        {
+        while ($data = $res->fetch_assoc()) {
             $data_arr[] = $data;
         }
 
@@ -45,23 +43,18 @@ class Usuario
 
         $stmt->bind_param('ssss', $data['nombre'], $data['apellido'], $data['email'], $data['pass']);
 
-        try
-        {
+        try {
             $stmt->execute();
             return true;
-        }
-        catch (mysqli_sql_exception $e)
-        {
-            if ($e->getCode() == 1062)
-            {
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1062) {
                 return "emailExiste";
             }
 
             throw $e;
         }
 
-        if ($stmt->error)
-        {
+        if ($stmt->error) {
             return ['message' => 'Error en la ejecución de la consulta.'];
         }
 
@@ -75,12 +68,11 @@ class Usuario
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sssi', $data['nombre'], $data['apellido'], $data['pass'], $id);
 
-        if (!$stmt->execute())
-        {
+        if (!$stmt->execute()) {
             error_log("Error en update: " . $stmt->error);
             return false;
         }
-        
+
         return true;
     }
 
@@ -92,8 +84,7 @@ class Usuario
         $stmt->bind_param('i', $id);
         $stmt->execute();
 
-        if ($stmt->error)
-        {
+        if ($stmt->error) {
             return ['message' => 'Error al eliminar'];
         }
 

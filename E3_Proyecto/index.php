@@ -2,22 +2,19 @@
 session_start();
 
 // Si está la sesión activa, redirigir al main
-if (isset($_SESSION['usuario']))
-{
+if (isset($_SESSION['usuario'])) {
     header('Location: views/main.php');
     exit;
 }
 
 // Si están las cookies activas, redirigir al main
-if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usuario_email']))
-{
+if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usuario_email'])) {
     require_once 'models/Usuario.php';
 
     $usuarioModel = new Usuario();
     $userData = $usuarioModel->getById($_COOKIE['usuario_id']);
 
-    if ($userData && $userData['email'] === $_COOKIE['usuario_email'])
-    {
+    if ($userData && $userData['email'] === $_COOKIE['usuario_email']) {
         $_SESSION['usuario'] = ['id_usuario' => $userData['id_usuario'], 'nombre' => $userData['nombre'], 'apellido' => $userData['apellido'], 'email' => $userData['email']];
 
         // Redirigir porque ya está logueado
@@ -35,8 +32,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
-        if (localStorage.getItem("theme") === "dark")
-        {
+        if (localStorage.getItem("theme") === "dark") {
             document.documentElement.classList.add("dark");
         }
     </script>
@@ -67,8 +63,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
             <?php if (isset($_GET['error'])): ?>
                 <div style="color:red;">
                     <?php
-                    switch ($_GET['error'])
-                    {
+                    switch ($_GET['error']) {
                         case 'nombre':
                             echo "El nombre sólo debe tener letras.<br><br>";
                             break;
@@ -98,8 +93,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
             <?php if (isset($_GET['ok'])): ?>
                 <div style="color:green;">
                     <?php
-                    switch ($_GET['ok'])
-                    {
+                    switch ($_GET['ok']) {
                         case 'cuentaEliminada':
                             echo "¡Cuenta eliminada con éxito!<br><br>";
                             break;
@@ -123,7 +117,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
                 <input type="submit" value="Registrarse" name="registrar" id="boton">
 
                 <p>¿Ya tienes una cuenta?</p>
-                
+
                 <a href="views/inicio.php">Iniciar sesión</a>
             </form>
         </div>

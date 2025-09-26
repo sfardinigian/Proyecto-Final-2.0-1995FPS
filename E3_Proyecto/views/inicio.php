@@ -2,22 +2,19 @@
 session_start();
 
 // Si está la sesión activa, redirigir al main
-if (isset($_SESSION['usuario']))
-{
+if (isset($_SESSION['usuario'])) {
     header('Location: ../views/main.php');
     exit;
 }
 
 // Si están las cookies activas, redirigir al main
-if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usuario_email']))
-{
+if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usuario_email'])) {
     require_once '../models/Usuario.php';
 
     $usuarioModel = new Usuario();
     $userData = $usuarioModel->getById($_COOKIE['usuario_id']);
 
-    if ($userData && $userData['email'] === $_COOKIE['usuario_email'])
-    {
+    if ($userData && $userData['email'] === $_COOKIE['usuario_email']) {
         $_SESSION['usuario'] = ['id_usuario' => $userData['id_usuario'], 'nombre' => $userData['nombre'], 'apellido' => $userData['apellido'], 'email' => $userData['email']];
 
         // Redirigir porque ya está logueado
@@ -35,8 +32,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
-        if (localStorage.getItem("theme") === "dark")
-        {
+        if (localStorage.getItem("theme") === "dark") {
             document.documentElement.classList.add("dark");
         }
     </script>
@@ -59,7 +55,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
         <span id="iconoSol" class="modoIcono">☀︎</span>
         <span id="iconoLuna" class="modoIcono">🌙︎</span>
     </div>
-    
+
     <div class="contBody">
         <div class="contRegIn">
             <h1>Bienvenido</h1>
@@ -67,8 +63,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
             <?php if (isset($_GET['error'])): ?>
                 <div style="color:red;">
                     <?php
-                    switch ($_GET['error'])
-                    {
+                    switch ($_GET['error']) {
                         case 'email':
                             echo "El correo electrónico no está registrado.<br><br>";
                             break;
@@ -83,8 +78,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
             <?php if (isset($_GET['ok'])): ?>
                 <div style="color:green;">
                     <?php
-                    switch ($_GET['ok'])
-                    {
+                    switch ($_GET['ok']) {
                         case 'modificado':
                             echo "¡Datos modificados con éxito!<br><br>";
                             break;
@@ -105,14 +99,14 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
                 <label class="recordarme">
                     <input type="checkbox" name="recordarme">Recordarme
                 </label>
-                
+
                 <br>
                 <br>
 
                 <input type="submit" value="Ingresar" name="login">
 
                 <p>¿No tienes cuenta?</p>
-                
+
                 <a href="../index.php">Crea una</a>
             </form>
         </div>
