@@ -44,7 +44,7 @@ if (!isset($_SESSION['usuario'])) {
             <h1>Modificación</h1>
 
             <?php if (isset($_GET['error'])): ?>
-                <div style="color:red;">
+                <div style="color: red;">
                     <?php
                     switch ($_GET['error']) {
                         case 'nombre':

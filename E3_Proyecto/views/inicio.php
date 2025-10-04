@@ -61,7 +61,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
             <h1>Bienvenido</h1>
 
             <?php if (isset($_GET['error'])): ?>
-                <div style="color:red;">
+                <div style="color: red;">
                     <?php
                     switch ($_GET['error']) {
                         case 'email':
@@ -76,7 +76,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
             <?php endif; ?>
 
             <?php if (isset($_GET['ok'])): ?>
-                <div style="color:green;">
+                <div style="color: rgb(0, 153, 0);">
                     <?php
                     switch ($_GET['ok']) {
                         case 'modificado':

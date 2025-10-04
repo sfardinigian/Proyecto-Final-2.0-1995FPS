@@ -7,8 +7,14 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once '../controllers/usuarioController.php';
+require_once '../controllers/actividadController.php';
+
+$actividadController = new Actividad();
 
 $usuarioSesion = $_SESSION['usuario'];
+$id_usuario = $usuarioSesion['id_usuario'];
+
+$actividades = $actividadController->getByUsuario($id_usuario);
 ?>
 
 <!DOCTYPE html>
@@ -129,6 +135,111 @@ $usuarioSesion = $_SESSION['usuario'];
                 <h1>Listado de actividades <i class="fa-solid fa-bars-staggered"></i></h1>
             </section>
             <section class="contenidos2">
+                <div class="cargarAct">
+                    <form action="../routers/agregarActRouter.php" method="post">
+                        <input type="text" name="titulo" placeholder=" Nombre de la actividad" required><br>
+
+                        <div class="alignD">
+                            <div class="hiDiv">
+                                <label for="hora_inicio">Hora de inicio</label>
+                                <input type="time" name="hora_inicio" required>
+                            </div>
+
+                            <div class="hfDiv">
+                                <label for="hora_fin">Hora de fin</label>
+                                <input type="time" name="hora_fin" required>
+                            </div>
+
+                            <div class="cDiv">
+                                <label for="color">Color</label>
+                                <input type="color" name="color">
+                            </div>
+
+                            <select name="prioridad" required>
+                                <option value="" disabled selected hidden>Prioridad</option>
+                                <option value="Casual">Casual</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Importante">Importante</option>
+                            </select>
+
+                            <select name="dia" required>
+                                <option value="" disabled selected hidden>Día</option>
+                                <option value="Lunes">Lunes</option>
+                                <option value="Martes">Martes</option>
+                                <option value="Miércoles">Miércoles</option>
+                                <option value="Jueves">Jueves</option>
+                                <option value="Viernes">Viernes</option>
+                                <option value="Sábado">Sábado</option>
+                                <option value="Domingo">Domingo</option>
+                            </select>
+                        </div>
+
+                        <div class="centrarAg">
+                            <input type="submit" value="Agregar" name="agregar" id="boton">
+                        </div>
+                    </form>
+
+                    <?php if (isset($_GET['error'])): ?>
+                        <div style="color: red; text-align:center; margin-top: 25px;">
+                            <?php
+                            switch ($_GET['error']) {
+                                case 'titulo':
+                                    echo "El título es inválido.";
+                                    break;
+                                case 'horaInicio':
+                                    echo "La hora de inicio es inválida.";
+                                    break;
+                                case 'horaFin':
+                                    echo "La hora de fin es inválida.";
+                                    break;
+                                case 'horasInvalidas':
+                                    echo "La hora de inicio no puede ser mayor a la de fin.";
+                                    break;
+                                case 'color':
+                                    echo "El color es inválido.";
+                                    break;
+                                case 'prioridad':
+                                    echo "La prioridad es inválida.";
+                                    break;
+                                case 'dia':
+                                    echo "El día es inválido.";
+                                    break;
+                                case 'solapamiento':
+                                    echo "Las actividades no se pueden solapar en el mismo día.";
+                                    break;
+                                case 'noExiste':
+                                    echo "La actividad que quiere eliminar no existe.";
+                                    break;
+                                case 'desconocido':
+                                    echo "Ha ocurrido un error desconocido.";
+                                    break;
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_GET['ok'])): ?>
+                        <div style="color: rgb(0, 153, 0); text-align:center; margin-top: 25px;">
+                            <?php
+                            switch ($_GET['ok']) {
+                                case 'actividadAgregada':
+                                    echo "¡Actividad agregada con éxito!";
+                                    break;
+                                case 'eliminar':
+                                    echo "¡Actividad eliminada con éxito!";
+                                    break;
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_GET['error']) || isset($_GET['ok'])): ?>
+                        <script>
+                            window.location.hash = 'actividades';
+                        </script>
+                    <?php endif; ?>
+                </div>
+
                 <div class="tablaCont">
                     <table>
                         <tr>
@@ -136,9 +247,44 @@ $usuarioSesion = $_SESSION['usuario'];
                                 <h3 style="color: rgb(0, 153, 0);">Casuales</h3>
                             </th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                        </tr>
+                        <?php if (!empty(array_filter((array)$actividades, fn($a) => is_array($a) && $a['prioridad'] === 'Casual'))): ?>
+                            <?php foreach ($actividades as $act): ?>
+                                <?php if ($act['prioridad'] === 'Casual'): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="datosAct">
+                                                <div class="supCont">
+                                                    <div class="col" style="background-color: <?= $act['color'] ?>;"></div>
+                                                    <p><?= $act['titulo'] ?></p>
+                                                    <form action="../routers/eliminarActRouter.php" method="post" style="display: inline;">
+                                                        <input type="hidden" name="id_actividad" value="<?= $act['id_actividad'] ?>">
+                                                        <button type="submit" name="eliminar" class="del">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="infCont">
+                                                    <div class="horario">
+                                                        <p><?= date("H:i", strtotime($act['hora_inicio'])) ?> - <?= date("H:i", strtotime($act['hora_fin'])) ?></p>
+                                                    </div>
+                                                    <div class="dia">
+                                                        <p><?= $act['dia'] ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td>
+                                    <div class="actVac">
+                                        <h4>No tiene actividades casuales.</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     </table>
 
                     <table>
@@ -147,9 +293,44 @@ $usuarioSesion = $_SESSION['usuario'];
                                 <h3 style="color: orange;">Normales</h3>
                             </th>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                        </tr>
+                        <?php if (!empty(array_filter((array)$actividades, fn($a) => is_array($a) && $a['prioridad'] === 'Normal'))): ?>
+                            <?php foreach ($actividades as $act): ?>
+                                <?php if ($act['prioridad'] === 'Normal'): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="datosAct">
+                                                <div class="supCont">
+                                                    <div class="col" style="background-color: <?= $act['color'] ?>;"></div>
+                                                    <p><?= $act['titulo'] ?></p>
+                                                    <form action="../routers/eliminarActRouter.php" method="post" style="display: inline;">
+                                                        <input type="hidden" name="id_actividad" value="<?= $act['id_actividad'] ?>">
+                                                        <button type="submit" name="eliminar" class="del">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="infCont">
+                                                    <div class="horario">
+                                                        <p><?= date("H:i", strtotime($act['hora_inicio'])) ?> - <?= date("H:i", strtotime($act['hora_fin'])) ?></p>
+                                                    </div>
+                                                    <div class="dia">
+                                                        <p><?= $act['dia'] ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td>
+                                    <div class="actVac">
+                                        <h4>No tiene actividades normales.</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     </table>
 
                     <table>
@@ -158,9 +339,44 @@ $usuarioSesion = $_SESSION['usuario'];
                                 <h3 style="color: red;">Importantes</h3>
                             </th>
                         </tr>
-                        <tr>
-                            <td>3</td>
-                        </tr>
+                        <?php if (!empty(array_filter((array)$actividades, fn($a) => is_array($a) && $a['prioridad'] === 'Importante'))): ?>
+                            <?php foreach ($actividades as $act): ?>
+                                <?php if ($act['prioridad'] === 'Importante'): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="datosAct">
+                                                <div class="supCont">
+                                                    <div class="col" style="background-color: <?= $act['color'] ?>;"></div>
+                                                    <p><?= $act['titulo'] ?></p>
+                                                    <form action="../routers/eliminarActRouter.php" method="post" style="display: inline;">
+                                                        <input type="hidden" name="id_actividad" value="<?= $act['id_actividad'] ?>">
+                                                        <button type="submit" name="eliminar" class="del">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="infCont">
+                                                    <div class="horario">
+                                                        <p><?= date("H:i", strtotime($act['hora_inicio'])) ?> - <?= date("H:i", strtotime($act['hora_fin'])) ?></p>
+                                                    </div>
+                                                    <div class="dia">
+                                                        <p><?= $act['dia'] ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td>
+                                    <div class="actVac">
+                                        <h4>No tiene actividades importantes.</h4>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     </table>
                 </div>
             </section>

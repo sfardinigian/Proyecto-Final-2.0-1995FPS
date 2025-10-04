@@ -353,20 +353,19 @@ header {
 .cuentaCont {
     position: fixed;
     display: flex;
-    right: 85px;
-    top: 85px;
     z-index: 10000;
     transition: 0.3s;
 }
 
+/* Contenedor visible de los datos de la cuenta */
 .cuentaDatosCss {
     opacity: 0;
-    transform: translateY(-50px) scale(0.7);
+    transform: translate(-50%, -50%) scale(0.7);
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    position: relative;
-    right: 0;
-    top: 100%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
     background-color: var(--fondoRegIn);
     box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
     border-radius: 50px 0 50px 50px;
@@ -374,13 +373,13 @@ header {
     z-index: 100;
     width: 280px;
     height: 500px;
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(10px);
 }
 
 /* Cuando está visible */
 .cuentaDatosCss.activo {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) scale(1);
     pointer-events: auto;
 }
 
@@ -488,13 +487,294 @@ header {
     scroll-margin-top: 140px;
 }
 
-/* ------------- Actividades ------------- */
+/* ------------- Carga de actividades ------------- */
 
-/* Lista de actividades */
+/* Div de carga de actividades */
+.cargarAct {
+    background-color: var(--fondoHeader);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    backdrop-filter: blur(7px);
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
+/* Cargar nombre de actividad */
+input[name="titulo"] {
+    width: calc(100% - 4px);
+    margin: 0 0 7px 0;
+}
+
+/* Cargar hora de inicio */
+label[for="hora_inicio"] {
+    margin: 7px 0 7px 0;
+    display: flex;
+    font-size: 14px;
+}
+
+input[name="hora_inicio"] {
+    width: 80px;
+    height: 27px;
+    margin: 7px 0 5px 0;
+    position: relative;
+}
+
+input[name="hora_inicio"]:hover {
+    cursor: pointer;
+}
+
+.hiDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0;
+}
+
+/* Cargar hora de fin */
+label[for="hora_fin"] {
+    margin: 7px 0 7px 0;
+    display: flex;
+    font-size: 14px;
+}
+
+input[name="hora_fin"] {
+    width: 80px;
+    height: 27px;
+    margin: 7px 0 5px 0;
+    position: relative;
+}
+
+input[name="hora_fin"]:hover {
+    cursor: pointer;
+}
+
+.hfDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0;
+}
+
+/* Centrar --:-- */
+input[type="time"] {
+    text-align: center;
+}
+
+/* Ocultar reloj del input "time" */
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+/* Cargar color */
+label[for="color"] {
+    margin: 7px 0 7px 0;
+    display: flex;
+    font-size: 14px;
+}
+
+input[name="color"] {
+    width: 26px;
+    height: 27px;
+    margin: 7px 0 5px 0;
+    position: relative;
+}
+
+input[name="color"]:hover {
+    cursor: pointer;
+}
+
+.cDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Cargar prioridad */
+select[name="prioridad"] {
+    margin: 7px 0 7px 0;
+    height: 27px;
+    flex: 1;
+    background-color: var(--fondoInput);
+    color: var(--textoInput);
+    border: none;
+    box-shadow: 0 0 15px var(--colorSombra);
+}
+
+select[name="prioridad"]:hover {
+    cursor: pointer;
+}
+
+/* Cargar día */
+select[name="dia"] {
+    margin: 7px 0 7px 0;
+    height: 27px;
+    flex: 1;
+    background-color: var(--fondoInput);
+    color: var(--textoInput);
+    border: none;
+    box-shadow: 0 0 15px var(--colorSombra);
+}
+
+select[name="dia"]:hover {
+    cursor: pointer;
+}
+
+/* Alinear contenedores de carga de actividades */
+.alignD {
+    flex-direction: row;
+    display: flex;
+    gap: 12px;
+}
+
+/* Botón agregar actividad */
+input[name="agregar"] {
+    width: 170px;
+    margin: 7px 7px 0 7px;
+}
+
+/* Centrar botón */
+.centrarAg {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+}
+
+/* ------------- Datos de actividades ------------- */
+
+/* Contenedor padre */
+.datosAct {
+    width: cover;
+    height: 90px;
+    background-color: var(--fondoHeader);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    backdrop-filter: blur(7px);
+    display: flex;
+    margin: 0 8px 0 8px;
+    border-radius: 20px 0 20px 0;
+    border: dashed;
+    border-color: gray;
+    transition: 0.3s;
+}
+
+.datosAct:hover {
+    transform: rotate(1deg) scale(1.03);
+    cursor: grab;
+}
+
+/* Contenedor de actividad vacía */
+.actVac {
+    width: cover;
+    height: 90px;
+    background-color: var(--fondoHeader);
+    box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
+    backdrop-filter: blur(7px);
+    display: flex;
+    margin: 0 8px 0 8px;
+    border-radius: 20px 0 20px 0;
+    justify-content: center;
+    align-items: center;
+    border: solid;
+    border-color: gray;
+    opacity: 20%;
+}
+
+/* Contenedor superior */
+.supCont {
+    width: 100%;
+    height: 50%;
+    background-color: var(--fondoHeader);
+    box-shadow: 0 0 10px var(--colorSombra);
+    z-index: 9;
+    display: flex;
+    border-top-left-radius: 20px;
+    align-items: center;
+    position: relative;
+}
+
+.datosAct .supCont p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 100px);
+}
+
+/* Color de la actividad */
+.col {
+    height: 15px;
+    width: 15px;
+    border: var(--textoColor);
+    border-style: solid;
+    border-width: 2px;
+    background-color: lightblue;
+    margin-left: 14px;
+    margin-right: 8px;
+    border-radius: 15px;
+}
+
+/* Ícono de borrar actividad */
+.del {
+    height: 100%;
+    background-color: var(--fondoHeader);
+    box-shadow: 0 0 10px var(--colorSombra);
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 45px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    transition: 0.3s;
+    border: none;
+    font-size: 17px;
+    color: var(--textoColor);
+    z-index: 10;
+}
+
+.del:hover {
+    color: red;
+    cursor: pointer;
+}
+
+/* Contenedor inferior */
+.infCont {
+    height: 45px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    align-items: center;
+}
+
+/* Contenedor horario */
+.horario {
+    height: 100%;
+    width: 50%;
+    align-items: center;
+    display: flex;
+    padding-left: 15px;
+}
+
+/* Contenedor día */
+.dia {
+    height: 100%;
+    width: 50%;
+    align-items: center;
+    display: flex;
+    padding-left: 15px;
+    box-shadow: 0 0 10px var(--colorSombra);
+}
+
+/* Tablas */
 .tablaCont {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
 }
 
 table {
@@ -596,7 +876,57 @@ body.dark {
     --subrayado: rgb(78, 78, 78);
 }
 
-/* ------------- Responsive para celulares ------------- */
+/* ------------- Responsive amplio para los botones del header y el formulario de actividades ------------- */
+
+@media (max-width: 1200px) {
+
+    .b1 {
+        font-size: 15px;
+        padding: 24px 10px;
+    }
+
+    .b1::after {
+        bottom: -2px;
+    }
+
+    .alignD {
+        flex-direction: column;
+        display: flex;
+        gap: 0;
+    }
+
+    select[name="prioridad"] {
+        width: 100%;
+        flex: none;
+    }
+
+    select[name="dia"] {
+        width: 100%;
+        flex: none;
+    }
+}
+
+/* ------------- Responsive para la tabla de actividades ------------- */
+
+@media (max-width: 1000px) {
+
+    /* Tablas de actividades */
+    .tablaCont {
+        flex-direction: column;
+    }
+
+    /* Actividades */
+    .datosAct {
+        margin: 0;
+    }
+
+    /* Contenedor vacío */
+    .actVac {
+        margin: 0;
+    }
+}
+
+/* ------------- Responsive general para celulares ------------- */
 
 @media (max-width: 676px) {
 
@@ -640,12 +970,6 @@ body.dark {
         height: 80%;
     }
 
-    /* Contenedor de datos de la cuenta */
-    .cuentaCont {
-        right: 30px;
-        top: 80px;
-    }
-
     /* Contenedores de actividades */
     .contenidos1 {
         padding: 7px 30px 15px 25px;
@@ -653,10 +977,5 @@ body.dark {
 
     .contenidos2 {
         padding: 1px 30px 30px 25px;
-    }
-
-    /* Listado de actividades */
-    .tablaCont {
-        flex-direction: column;
     }
 }
