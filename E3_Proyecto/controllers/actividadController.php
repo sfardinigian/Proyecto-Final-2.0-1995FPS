@@ -13,6 +13,16 @@ class actividadController
         return $actividad->getByUsuario($id_usuario);
     }
 
+    public function obtenerPorPrioridad()
+    {
+        $actividad = new Actividad;
+
+        // Usuario de la sesión activa
+        $id_usuario = $_SESSION['usuario']['id_usuario'];
+
+        return $actividad->getActividadesPorPrioridad($id_usuario);
+    }
+
     public function crearActividad($data)
     {
         // Validación de título
