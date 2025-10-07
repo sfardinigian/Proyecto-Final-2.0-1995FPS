@@ -45,7 +45,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 
-    <script src="js/script.js" defer></script>
+    <script src="js/script.js?v=<?php echo time(); ?>" defer></script>
 
     <title>Registrarse</title>
 </head>

@@ -38,7 +38,9 @@ $actividades = $actividadController->getByUsuario($id_usuario);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 
-    <script src="../js/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="../js/script.js?v=<?php echo time(); ?>" defer></script>
 
     <script src="https://kit.fontawesome.com/7b60821cfc.js" crossorigin="anonymous"></script>
 
@@ -384,10 +386,16 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
         <div class="contenidos" id="graficos">
             <section class="contenidos1">
-                <h1>Gráfico semanal <i class="fa-solid fa-calendar-days"></i></i></h1>
+                <h1>Gráficos <i class="fa-solid fa-calendar-days"></i></i></h1>
             </section>
             <section class="contenidos2">
-                <p>Contenido</p>
+                <h2>Gráfico de Actividades por Prioridad</h2>
+
+            <div class="grafico-container">
+            <canvas id="graficoPrioridad"></canvas>
+            </div>
+
+
             </section>
         </div>
 
@@ -409,6 +417,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
     </div>
+
 </body>
 
 </html>

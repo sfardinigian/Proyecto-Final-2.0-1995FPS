@@ -979,3 +979,14 @@ body.dark {
         padding: 1px 30px 30px 25px;
     }
 }
+
+.grafico-container {
+  width: 100%;
+  max-width: 500px;   /* el gráfico nunca será más grande que 500px */
+  margin: 0 auto;     /* centrado */
+}
+
+#graficoPrioridad {
+  width: 100% !important;  /* ocupa todo el ancho del contenedor */
+  height: auto !important; /* altura proporcional */
+}
