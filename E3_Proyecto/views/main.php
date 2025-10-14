@@ -23,6 +23,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 
     <script>
         if (localStorage.getItem("theme") === "dark") {
@@ -98,8 +99,8 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
             <div class="cent3">
                 <div class="modoContainer">
-                    <span id="iconoSol" class="modoIcono">☀︎</span>
-                    <span id="iconoLuna" class="modoIcono">🌙︎</span>
+                    <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
+                    <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
                 </div>
             </div>
         </div>
@@ -137,6 +138,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                 <h1>Listado de actividades <i class="fa-solid fa-bars-staggered"></i></h1>
             </section>
             <section class="contenidos2">
+                <h2>Agregar actividad:</h2>
                 <div class="cargarAct">
                     <form action="../routers/agregarActRouter.php" method="post">
                         <input type="text" name="titulo" placeholder=" Nombre de la actividad" required><br>
@@ -384,20 +386,45 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
 
-        <div class="contenidos" id="graficos">
+       <div class="contenidos" id="graficos">
+  <section class="contenidos1">
+    <h1>Gráfico de Actividades por Prioridad <i class="fa-solid fa-chart-pie"></i></h1>
+  </section>
+
+  <section class="contenidos2">
+    <div class="grafico-wrapper">
+      
+      <!--Panel informativo dinámico -->
+      <div class="info-prioridad" id="infoPrioridad">
+        <h2 id="tituloPrioridad">Seleccioná una prioridad</h2>
+        <p id="detallePrioridad">Pasá el cursor por el gráfico para ver detalles.</p>
+
+        <!--Cuadro resumen -->
+        <div class="resumen-general" id="resumenGeneral">
+          <h3>Resumen semanal</h3>
+          <p id="mensajeGeneral">Analizando tus actividades...</p>
+        </div>
+      </div>
+
+      <!--Gráfico -->
+      <div class="grafico-container">
+        <canvas id="graficoPrioridad"></canvas>
+      </div>
+
+    </div>
+  </section>
+</div>
+        
+        <div class="contenidos">
             <section class="contenidos1">
-                <h1>Gráficos <i class="fa-solid fa-calendar-days"></i></i></h1>
+                <h1>Gráfico semanal <i class="fa-solid fa-calendar-days"></i></h1>
             </section>
             <section class="contenidos2">
-                <h2>Gráfico de Actividades por Prioridad</h2>
-
-            <div class="grafico-container">
-            <canvas id="graficoPrioridad"></canvas>
-            </div>
-
-
+                <p>Contenido</p>
             </section>
         </div>
+
+
 
         <div class="contenidos">
             <section class="contenidos1">
