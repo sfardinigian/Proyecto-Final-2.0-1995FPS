@@ -1300,5 +1300,60 @@ body.dark {
     box-sizing: border-box;
 }
 
+/* Contenedor general de la leyenda */
+#leyendaSemanal {
+    display: flex;
+    flex-wrap: wrap;       /* Permite que las leyendas se acomoden en varias filas */
+    gap: 15px;             /* Espacio entre cada ítem */
+    margin-top: 30px;      /* Mayor separación respecto al gráfico */
+    justify-content: flex-start; /* Alinea las leyendas desde el inicio */
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+/* Cada ítem de la leyenda */
+#leyendaSemanal div {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, background 0.2s;
+    cursor: default;
+}
+
+/* Hover para un toque interactivo */
+#leyendaSemanal div:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Caja de color */
+#leyendaSemanal div span:first-child {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+/* Nombre de la actividad */
+#leyendaSemanal div span:last-child {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--textoColor);
+}
+
+/* Responsive: en pantallas pequeñas se ajusta */
+@media (max-width: 480px) {
+    #leyendaSemanal {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px; /* también ajustamos en móvil */
+    }
+}
 
 

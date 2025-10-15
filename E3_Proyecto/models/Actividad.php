@@ -103,4 +103,30 @@ class Actividad
 
         return $data_arr ?: ['message' => 'Sin datos'];
     }
+
+    public function getActividadesSemanales($id_usuario)
+    {
+        $query = "SELECT a.id_actividad, a.titulo, a.hora_inicio, a.hora_fin, a.color, a.prioridad, a.dia 
+              FROM actividades a 
+              INNER JOIN usuarios u ON a.id_usuario = u.id_usuario 
+              WHERE u.id_usuario = ? 
+              ORDER BY a.dia, a.hora_inicio";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $id_usuario);
+        $stmt->execute();
+
+        if ($stmt->error) {
+            return ['message' => 'Error en la lectura'];
+        }
+
+        $res = $stmt->get_result();
+        $data_arr = [];
+
+        while ($data = $res->fetch_assoc()) {
+            $data_arr[] = $data;
+        }
+
+        return $data_arr ?: ['message' => 'Sin datos'];
+    }
 }

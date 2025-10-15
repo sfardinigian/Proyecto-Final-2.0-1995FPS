@@ -420,7 +420,8 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                 <h1>Gráfico semanal <i class="fa-solid fa-calendar-days"></i></h1>
             </section>
             <section class="contenidos2">
-                <p>Contenido</p>
+                <div id="leyendaSemanal" style="margin-top: 20px;"></div>
+                <canvas id="graficoSemanal" width="600" height="300"></canvas>
             </section>
         </div>
 

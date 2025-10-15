@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             titulo.textContent = label;
                             detalle.textContent = `${valor} tareas (${porcentaje}%). ${mensaje}`;
-                        } 
+                        }
                         else {
                             titulo.textContent = "Seleccioná una prioridad";
                             detalle.textContent = "Pasá el cursor por el gráfico para ver detalles.";
@@ -230,13 +230,183 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error en fetch:", error));
 });
 
+
+
+// --------------------------------- Generar gráfico semanal ------------------------------
+
+let chartSemanal;
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("../routers/graficoSemanalRouter.php")
+        .then(response => response.json())
+        .then(data => {
+            if (!data || data.message) {
+                console.warn("Sin datos semanales");
+                return;
+            }
+
+            const textoColor = getComputedStyle(document.body).getPropertyValue("--textoColor").trim();
+            const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+            const convertirHora = (hora) => {
+                const [h, m] = hora.split(":").map(Number);
+                return h + m / 60;
+            };
+
+            // 🔹 En lugar de un dataset por actividad, creamos uno solo con todas
+            const actividadesProcesadas = data.map((act) => ({
+                x: act.dia,
+                y: [convertirHora(act.hora_inicio), convertirHora(act.hora_fin)],
+                titulo: act.titulo,
+                color: act.color || "#999"
+            }));
+
+            const ctx = document.getElementById("graficoSemanal").getContext("2d");
+
+            chartSemanal = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: diasSemana,
+                    datasets: [
+                        {
+                            label: "Actividades",
+                            data: actividadesProcesadas,
+                            backgroundColor: actividadesProcesadas.map(a => a.color),
+                            borderWidth: 0 // sin borde
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: "x",
+                    parsing: {
+                        xAxisKey: "x",
+                        yAxisKey: "y"
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            title: { display: true, text: "Día de la semana", color: textoColor, font: {family:"Quicksand", size:16}},
+                            ticks: { color: textoColor, font: {
+                                    family: "Quicksand",
+                                    size: 18, padding:10
+                                }, }
+                        },
+                        y: {
+                            stacked: true,
+                            title: { display: true, text: "Hora del día", color: textoColor, font: {family:"Quicksand", size:16}},
+                            min: 0,
+                            max: 24,
+                            ticks: {
+                                stepSize: 2,
+                                color: textoColor,
+                                font: {family:"Quicksand", size:12},
+                                callback:value => {
+                                if (value === 24) return "00:00";
+                                 return `${value}:00`;
+                                } 
+                            }
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // ocultamos la leyenda, porque cada barra tiene su color
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const act = context.raw;
+                                    if (!act) return null;
+
+                                    const [inicio, fin] = act.y;
+
+                                    const formatoHora = (valor) => {
+                                        const horas = Math.floor(valor);
+                                        const minutos = Math.round((valor - horas) * 60);
+                                        return `${String(horas).padStart(2, "0")}:${String(minutos).padStart(2, "0")}`;
+                                    };
+
+                                    return `${act.titulo} (${formatoHora(inicio)} - ${formatoHora(fin)})`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            // Crear leyenda personalizada
+const contenedorLeyenda = document.getElementById("leyendaSemanal");
+contenedorLeyenda.innerHTML = ""; // limpiar por si se recarga
+
+const actividadesUnicas = [];
+data.forEach(a => {
+    if (!actividadesUnicas.some(x => x.titulo === a.titulo)) {
+        actividadesUnicas.push(a);
+    }
+});
+
+actividadesUnicas.forEach(a => {
+    const item = document.createElement("div");
+    item.style.display = "flex";
+    item.style.alignItems = "center";
+    item.style.marginBottom = "5px";
+
+    const colorBox = document.createElement("span");
+    colorBox.style.width = "16px";
+    colorBox.style.height = "16px";
+    colorBox.style.borderRadius = "50%";
+    colorBox.style.display = "inline-block";
+    colorBox.style.marginRight = "8px";
+    colorBox.style.backgroundColor = a.color || "#999";
+
+    const label = document.createElement("span");
+    label.textContent = a.titulo;
+    label.style.color = getComputedStyle(document.body).getPropertyValue("--textoColor").trim();
+    label.style.fontFamily = "Quicksand";
+    label.style.fontSize = "16px";
+
+    item.appendChild(colorBox);
+    item.appendChild(label);
+    contenedorLeyenda.appendChild(item);
+});
+
+
+        })
+        
+        
+        
+        .catch(err => console.error("Error cargando gráfico semanal:", err));
+});
+
+
+
+
 // ------------------------------ Actualizar colores al cambiar de modo ------------------------------
 function actualizarColoresGrafico() {
-    if (!chartPrioridad) return;
-
     const textoColor = getComputedStyle(document.body).getPropertyValue("--textoColor").trim();
-    chartPrioridad.options.plugins.legend.labels.color = textoColor;
-    chartPrioridad.data.datasets.forEach((dataset) => {
-    dataset.borderColor = textoColor;})
-    chartPrioridad.update();
+
+    // 🔹 Gráfico de prioridad
+    if (typeof chartPrioridad !== "undefined" && chartPrioridad) {
+        chartPrioridad.options.plugins.legend.labels.color = textoColor;
+        chartPrioridad.data.datasets.forEach((dataset) => {
+            dataset.borderColor = textoColor;
+        });
+        chartPrioridad.update();
+    }
+
+    // 🔹 Gráfico semanal
+    if (typeof chartSemanal !== "undefined" && chartSemanal) {
+        chartSemanal.options.scales.x.title.color = textoColor;
+        chartSemanal.options.scales.y.title.color = textoColor;
+        chartSemanal.options.scales.x.ticks.color = textoColor;
+        chartSemanal.options.scales.y.ticks.color = textoColor;
+        chartSemanal.update();
+    }
+
+    // 🔹 Leyenda semanal
+const leyendaTextos = document.querySelectorAll('#leyendaSemanal div span:last-child');
+leyendaTextos.forEach(span => {
+    span.style.color = textoColor;
+});
+
 }
+
