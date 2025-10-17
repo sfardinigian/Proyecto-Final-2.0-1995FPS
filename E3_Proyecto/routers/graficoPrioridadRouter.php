@@ -11,5 +11,6 @@ if (!isset($_SESSION['usuario'])) {
 $controller = new ActividadController();
 $data = $controller->obtenerPorPrioridad();
 
+// Enviamos el JSON
 header('Content-Type: application/json');
 echo json_encode($data);

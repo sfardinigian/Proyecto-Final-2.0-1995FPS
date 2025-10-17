@@ -22,6 +22,16 @@ class actividadController
 
         return $actividad->getActividadesPorPrioridad($id_usuario);
     }
+    
+      public function obtenerActividadesSemanales($id_usuario)
+    {
+        $actividad = new Actividad;
+
+        // Usuario de la sesión activa
+        $id_usuario = $_SESSION['usuario']['id_usuario'];
+
+        return $actividad->getActividadesSemanales($id_usuario);
+    }
 
     public function crearActividad($data)
     {
@@ -63,7 +73,7 @@ class actividadController
         }
 
         // Validación de día (Por si el usuario manipula el frontend)
-        $validDias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'domingo'];
+        $validDias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
         if (!in_array($data['dia'], $validDias)) {
             header('Location: ../views/main.php?error=dia');
             exit;

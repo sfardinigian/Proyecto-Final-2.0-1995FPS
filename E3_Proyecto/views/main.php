@@ -24,6 +24,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
     <script>
         if (localStorage.getItem("theme") === "dark") {
             document.documentElement.classList.add("dark");
@@ -98,8 +99,8 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
             <div class="cent3">
                 <div class="modoContainer">
-                    <span id="iconoSol" class="modoIcono">☀︎</span>
-                    <span id="iconoLuna" class="modoIcono">🌙︎</span>
+                    <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
+                    <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
                 </div>
             </div>
         </div>
@@ -138,6 +139,8 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
             <section class="contenidos2">
                 <div class="cargarAct">
+                    <h2 class="tituloAgregar">Agregar actividad</h2>
+
                     <form action="../routers/agregarActRouter.php" method="post">
                         <input type="text" name="titulo" placeholder=" Nombre de la actividad" required><br>
 
@@ -384,18 +387,18 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
 
-        <div class="contenidos" id="graficos">
+        <div class="contenidos">
             <section class="contenidos1">
-                <h1>Gráficos <i class="fa-solid fa-calendar-days"></i></i></h1>
+                <h1>Gráfico semanal <i class="fa-solid fa-calendar-days"></i></h1>
             </section>
             <section class="contenidos2">
-                <h2>Gráfico de Actividades por Prioridad</h2>
-
-            <div class="grafico-container">
-            <canvas id="graficoPrioridad"></canvas>
-            </div>
-
-
+                <div class="graficoSemanalSiV">
+                    <div id="leyendaSemanal" style="margin-top: 20px;"></div>
+                    <canvas id="graficoSemanal" width="600" height="300"></canvas>
+                </div>
+                <div class="graficoSemanalNoV">
+                    <h2 class="graficoAlerta">⚠️ Gire su celular para visualizar el gráfico.</h2>
+                </div>
             </section>
         </div>
 
@@ -405,6 +408,30 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
             <section class="contenidos2">
                 <p>Contenido</p>
+            </section>
+        </div>
+
+        <div class="contenidos" id="graficos">
+            <section class="contenidos1">
+                <h1>Gráfico de prioridad <i class="fa-solid fa-chart-pie"></i></h1>
+            </section>
+
+            <section class="contenidos2">
+                <div class="grafico-wrapper">
+                    <div class="info-prioridad" id="infoPrioridad">
+                        <h2 id="tituloPrioridad">Seleccioná una prioridad</h2>
+                        <p id="detallePrioridad">Pasá el cursor por el gráfico para ver detalles.</p>
+
+                        <div class="resumen-general" id="resumenGeneral">
+                            <h3>Resumen semanal</h3>
+                            <p id="mensajeGeneral">Analizando tus actividades...</p>
+                        </div>
+                    </div>
+
+                    <div class="grafico-container">
+                        <canvas id="graficoPrioridad"></canvas>
+                    </div>
+                </div>
             </section>
         </div>
 

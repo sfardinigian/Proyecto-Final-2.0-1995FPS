@@ -500,6 +500,11 @@ header {
     margin-bottom: 15px;
 }
 
+.tituloAgregar {
+    text-align: center;
+    margin-top: 0;
+}
+
 /* Cargar nombre de actividad */
 input[name="titulo"] {
     width: calc(100% - 4px);
@@ -799,14 +804,24 @@ th:last-child {
     border-right: none;
 }
 
-
 #actividades {
     scroll-margin-top: 140px;
 }
 
-/* Gráfico semanal */
-
-/* Gráfico diario */
+/* Cartel de no visualización de gráficos extensos */
+.graficoSemanalNoV {
+    display: none;
+    height: auto;
+    background-color: var(--fondoRegIn);
+    border-radius: 30px;
+    box-shadow: 0 0 10px var(--colorSombra), 0 0 20px var(--colorSombra);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    border: rgba(128, 128, 128, 0.50) solid;
+    margin-top: 20px;
+}
 
 #graficos {
     scroll-margin-top: 140px;
@@ -877,7 +892,6 @@ body.dark {
 }
 
 /* ------------- Responsive amplio para los botones del header y el formulario de actividades ------------- */
-
 @media (max-width: 1200px) {
 
     .b1 {
@@ -895,11 +909,7 @@ body.dark {
         gap: 0;
     }
 
-    select[name="prioridad"] {
-        width: 100%;
-        flex: none;
-    }
-
+    select[name="prioridad"],
     select[name="dia"] {
         width: 100%;
         flex: none;
@@ -907,7 +917,6 @@ body.dark {
 }
 
 /* ------------- Responsive para la tabla de actividades ------------- */
-
 @media (max-width: 1000px) {
 
     /* Tablas de actividades */
@@ -916,18 +925,13 @@ body.dark {
     }
 
     /* Actividades */
-    .datosAct {
-        margin: 0;
-    }
-
-    /* Contenedor vacío */
+    .datosAct,
     .actVac {
         margin: 0;
     }
 }
 
 /* ------------- Responsive general para celulares ------------- */
-
 @media (max-width: 676px) {
 
     /* Elementos del header */
@@ -978,15 +982,191 @@ body.dark {
     .contenidos2 {
         padding: 1px 30px 30px 25px;
     }
+
+    .grafico-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .info-prioridad,
+    .grafico-container {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 100%;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .graficoSemanalSiV {
+        display: none;
+    }
+
+    .graficoSemanalNoV {
+        display: flex;
+    }
 }
 
+/* ------------- Responsive general para pantallas muy pequeñas ------------- */
+
+@media (max-width: 480px) {
+    #leyendaSemanal {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+}
+
+/* ------------- Sección de gráficos y prioridad ------------- */
+
 .grafico-container {
-  width: 100%;
-  max-width: 500px;   /* el gráfico nunca será más grande que 500px */
-  margin: 0 auto;     /* centrado */
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    margin: 0 auto;
+    flex: 1;
+    min-width: 300px;
+    box-sizing: border-box;
 }
 
 #graficoPrioridad {
-  width: 100% !important;  /* ocupa todo el ancho del contenedor */
-  height: auto !important; /* altura proporcional */
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    object-fit: contain;
+    box-sizing: border-box;
+}
+
+.grafico-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 0;
+}
+
+.info-prioridad {
+    flex: 1;
+    min-width: 280px;
+    max-width: 380px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-prioridad:hover {
+    transform: translateY(7px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.info-prioridad h2 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 22px;
+    color: var(--textoColor);
+    margin-bottom: 10px;
+}
+
+.info-prioridad p {
+    font-family: "Quicksand", sans-serif;
+    font-size: 16px;
+    color: var(--textoColor);
+    line-height: 1.5;
+    transition: all 0.3s ease;
+}
+
+/* Resumen general */
+.resumen-general {
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+}
+
+.resumen-general.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.resumen-general h3 {
+    color: var(--textoColor);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.resumen-general p {
+    color: var(--textoColor);
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+/* Detalle de prioridad */
+#detallePrioridad {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    justify-content: center;
+    text-align: flex-start;
+    flex-direction: column;
+    word-break: break-word;
+}
+
+/* Leyenda semanal */
+#leyendaSemanal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#leyendaSemanal div {
+    display: flex;
+    align-items: center;
+    background: var(--fondoRegIn);
+    border-radius: 12px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background 0.2s;
+    cursor: default;
+}
+
+#leyendaSemanal div:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#leyendaSemanal div span:first-child {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+#leyendaSemanal div span:last-child {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--textoColor);
 }

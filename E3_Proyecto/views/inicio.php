@@ -47,13 +47,15 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 
     <script src="../js/script.js?v=<?php echo time(); ?>" defer></script>
 
+    <script src="https://kit.fontawesome.com/7b60821cfc.js" crossorigin="anonymous"></script>
+
     <title>Iniciar sesión</title>
 </head>
 
 <body>
     <div class="modoContainer">
-        <span id="iconoSol" class="modoIcono">☀︎</span>
-        <span id="iconoLuna" class="modoIcono">🌙︎</span>
+        <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
+        <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
     </div>
 
     <div class="contBody">
