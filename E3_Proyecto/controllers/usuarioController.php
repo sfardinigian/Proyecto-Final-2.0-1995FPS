@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../controllers/mailController.php';
 
 class usuarioController
 {
@@ -50,6 +51,10 @@ class usuarioController
 
         // Verificamos que el usuario sea único
         if ($resultado === true) {
+            // Enviamos mail de bienvenida
+            $mailController = new MailController();
+            $mailController->enviarMailRegistro($data['email'], $data['nombre']);
+            
             header('Location: ../views/inicio.php?ok=registro');
             exit;
         } elseif ($resultado === "emailExiste") {

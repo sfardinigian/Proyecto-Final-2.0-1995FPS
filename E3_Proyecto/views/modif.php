@@ -85,12 +85,24 @@ if (!isset($_SESSION['usuario'])) {
 
                 <br>
 
-                <input type="password" name="passNueva" placeholder=" Contraseña nueva (opcional)"><br>
+                <input id="contrasenia" type="password" name="passNueva" placeholder=" Contraseña nueva (opcional)"><br>
                 <input type="password" name="passNueva2" placeholder=" Repita la contraseña"><br>
 
-                <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['usuario']['id_usuario']; ?>">
+                <div class="cen">
+                    <div class="validPass">
+                        <div class="validPassH">
+                            <h4>La contraseña debe contener</h4>
+                        </div>
+                        
+                        <div class="validPassP">
+                            <div id="longitud" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 8 caracteres</div>
+                            <div id="numero" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 número</div>
+                            <div id="letra" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 letra</div>
+                        </div>
+                    </div>
+                </div>
 
-                <br>
+                <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['usuario']['id_usuario']; ?>">
 
                 <input type="submit" value="Modificar" name="modificar">
 

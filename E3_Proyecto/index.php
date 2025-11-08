@@ -111,10 +111,22 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 
                 <br>
 
-                <input type="password" name="pass" placeholder=" Contraseña" required><br>
+                <input id="contrasenia" type="password" name="pass" placeholder=" Contraseña" required><br>
                 <input type="password" name="pass2" placeholder=" Repita la contraseña" required><br>
 
-                <br>
+                <div class="cen">
+                    <div class="validPass">
+                        <div class="validPassH">
+                            <h4>La contraseña debe contener</h4>
+                        </div>
+                        
+                        <div class="validPassP">
+                            <div id="longitud" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 8 caracteres</div>
+                            <div id="numero" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 número</div>
+                            <div id="letra" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 letra</div>
+                        </div>
+                    </div>
+                </div>
 
                 <input type="submit" value="Registrarse" name="registrar" id="boton">
 

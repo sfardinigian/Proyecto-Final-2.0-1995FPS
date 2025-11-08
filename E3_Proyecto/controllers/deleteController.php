@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../controllers/mailController.php';
 
 // Verificamos que haya sesión activa
 if (!isset($_SESSION['usuario'])) {
@@ -11,9 +12,14 @@ if (!isset($_SESSION['usuario'])) {
 $id = $_SESSION['usuario']['id_usuario'];
 
 $usuario = new Usuario();
+$datosUsuario = $usuario->getById($id);
 
 // Intentamos borrar el usuario
 if ($usuario->delete($id)) {
+    // Enviamos mail de eliminación de cuenta
+    $mailController = new MailController();
+    $mailController->enviarMailEliminacion($datosUsuario['email'], $datosUsuario['nombre']);
+
     // Borramos la sesión
     $_SESSION = [];
     session_destroy();

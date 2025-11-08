@@ -56,14 +56,16 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
         <div class="botonesIn">
             <a href="#inicio" class="b1"><i class="fa-solid fa-house"></i> Inicio</a>
-            <a href="#actividades" class="b1"><i class="fa-solid fa-clipboard-list"></i></i> Actividades</a>
+            <a href="#actividades" class="b1"><i class="fa-solid fa-clipboard"></i></i> Actividades</a>
             <a href="#graficos" class="b1"><i class="fa-solid fa-chart-simple"></i> Gráficos</a>
             <a href="#recordatorios" class="b1"><i class="fa-solid fa-bell"></i> Recordatorios</a>
+            <a href="#creditos" class="b1"><i class="fa-solid fa-users"></i> Créditos</a>
 
             <a href="#inicio" class="b2"><i class="fa-solid fa-house"></i></a>
-            <a href="#actividades" class="b2"><i class="fa-solid fa-clipboard-list"></i></i></a>
+            <a href="#actividades" class="b2"><i class="fa-solid fa-clipboard"></i></i></a>
             <a href="#graficos" class="b2"><i class="fa-solid fa-chart-simple"></i></a>
             <a href="#recordatorios" class="b2"><i class="fa-solid fa-bell"></i></a>
+            <a href="#creditos" class="b2"><i class="fa-solid fa-users"></i></a>
         </div>
 
         <div class="cuentaC">
@@ -387,51 +389,78 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
 
-        <div class="contenidos">
+        <div class="contenidos" id="graficos">
             <section class="contenidos1">
                 <h1>Gráfico semanal <i class="fa-solid fa-calendar-days"></i></h1>
             </section>
+
             <section class="contenidos2">
-                <div class="graficoSemanalSiV">
-                    <div id="leyendaSemanal" style="margin-top: 20px;"></div>
-                    <canvas id="graficoSemanal" width="600" height="300"></canvas>
-                </div>
-                <div class="graficoSemanalNoV">
-                    <h2 class="graficoAlerta">⚠️ Gire su celular para visualizar el gráfico.</h2>
-                </div>
+                <?php if (!empty($actividades) && !isset($actividades['message'])) { ?>
+                    <div class="graficoSemanalSiV">
+                        <div id="leyendaSemanal" style="margin-top: 20px;"></div>
+                        <canvas id="graficoSemanal" width="600" height="300"></canvas>
+                    </div>
+                    <div class="graficoSemanalNoV">
+                        <h3 class="graficoAlerta">⚠️ Gire su celular para visualizar el gráfico.</h3>
+                    </div>
+                <?php } else { ?>
+                    <div class="noActividad">
+                        <div class="noActividad1">
+                            <h3>🚫 No tiene actividades para mostrar en el gráfico semanal.</h3>
+                        </div>
+                    </div>
+                <?php } ?>
             </section>
         </div>
 
         <div class="contenidos">
-            <section class="contenidos1">
-                <h1>Gráfico diario <i class="fa-solid fa-calendar-day"></i></h1>
-            </section>
-            <section class="contenidos2">
-                <p>Contenido</p>
-            </section>
-        </div>
-
-        <div class="contenidos" id="graficos">
             <section class="contenidos1">
                 <h1>Gráfico de prioridad <i class="fa-solid fa-chart-pie"></i></h1>
             </section>
 
             <section class="contenidos2">
-                <div class="grafico-wrapper">
-                    <div class="info-prioridad" id="infoPrioridad">
-                        <h2 id="tituloPrioridad">Seleccioná una prioridad</h2>
-                        <p id="detallePrioridad">Pasá el cursor por el gráfico para ver detalles.</p>
+                <?php if (!empty($actividades) && !isset($actividades['message'])) { ?>
+                    <br>
+                    <div class="grafico-wrapper">
+                        <div class="info-prioridad" id="infoPrioridad">
+                            <h2 id="tituloPrioridad">Seleccioná una prioridad</h2>
+                            <p id="detallePrioridad">Pasá el cursor por el gráfico para ver detalles.</p>
 
-                        <div class="resumen-general" id="resumenGeneral">
-                            <h3>Resumen semanal</h3>
-                            <p id="mensajeGeneral">Analizando tus actividades...</p>
+                            <div class="resumen-general" id="resumenGeneral">
+                                <h3>Resumen semanal</h3>
+                                <p id="mensajeGeneral">Analizando tus actividades...</p>
+                            </div>
+                        </div>
+
+                        <div class="grafico-container">
+                            <canvas id="graficoPrioridad"></canvas>
                         </div>
                     </div>
-
-                    <div class="grafico-container">
-                        <canvas id="graficoPrioridad"></canvas>
+                <?php } else { ?>
+                    <div class="noActividad">
+                        <div class="noActividad1">
+                            <h3>🚫 No tiene actividades para mostrar sus prioridades.</h3>
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
+            </section>
+        </div>
+
+        <div class="contenidos">
+            <section class="contenidos1">
+                <h1>Gráfico informativo <i class="fa-solid fa-circle-info"></i></h1>
+            </section>
+
+            <section class="contenidos2">
+                <?php if (!empty($actividades) && !isset($actividades['message'])) { ?>
+                    <p>Contenido si hay actividad.</p>
+                <?php } else { ?>
+                    <div class="noActividad">
+                        <div class="noActividad1">
+                            <h3>🚫 No tiene actividades para mostrar información.</h3>
+                        </div>
+                    </div>
+                <?php } ?>
             </section>
         </div>
 
@@ -439,12 +468,25 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             <section class="contenidos1">
                 <h1>Recordatorios <i class="fa-solid fa-comment"></i></h1>
             </section>
+
             <section class="contenidos2">
-                <p>Contenido</p>
+                <p>Todavía no confirmado.</p>
             </section>
         </div>
     </div>
 
+    <footer id="creditos">
+        <div class="footerContenido">
+            <h3 class="footerTitulo"><i class="fa-solid fa-clock"></i> Proyecto Final - Cronos</h3>
+
+            <p class="footerTexto">
+                Desarrollado por <b>Villada Gonzalo</b>, <b>Ibarra Franco</b> y <b>Sfardini Gian</b><br>
+                Tecnicatura Superior en Análisis y Desarrollo de Software - 3er Año
+            </p>
+
+            <p class="footerDerechos">© 2025 Cronos. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 
 </html>

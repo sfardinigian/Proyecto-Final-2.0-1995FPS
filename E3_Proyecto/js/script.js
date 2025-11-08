@@ -35,6 +35,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// ------------------------------ Validador de contraseña ------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    const passwordInput = document.getElementById('contrasenia');
+    const lengthReq = document.getElementById('longitud');
+    const numberReq = document.getElementById('numero');
+    const letterReq = document.getElementById('letra');
+
+    // Evitar errores si no existen los elementos en los otros archivos
+    if (!passwordInput || !lengthReq || !numberReq || !letterReq) return;
+
+    // Función para cambiar ícono
+    function cambiarIcono(elemento, valido) {
+        const icono = elemento.querySelector("i");
+        if (valido) {
+            icono.classList.remove("fa-circle-xmark");
+            icono.classList.add("fa-circle-check");
+        } else {
+            icono.classList.remove("fa-circle-check");
+            icono.classList.add("fa-circle-xmark");
+        }
+    }
+
+    passwordInput.addEventListener('input', () => {
+        const value = passwordInput.value;
+
+        // Validación de longitud
+        const validLongitud = value.length >= 8;
+        lengthReq.classList.toggle('valido', validLongitud);
+        cambiarIcono(lengthReq, validLongitud);
+
+        // Validación de número
+        const validNumero = /\d/.test(value);
+        numberReq.classList.toggle('valido', validNumero);
+        cambiarIcono(numberReq, validNumero);
+
+        // Validación de letra
+        const validLetra = /[a-zA-Z]/.test(value);
+        letterReq.classList.toggle('valido', validLetra);
+        cambiarIcono(letterReq, validLetra);
+    });
+});
+
+
 // ------------------------------ Mostrar y ocultar datos de cuenta ------------------------------
 
 // Mostrar/ocultar menú al hacer click

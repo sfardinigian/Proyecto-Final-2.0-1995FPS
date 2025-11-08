@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../controllers/mailController.php';
 
 class modifController
 {
@@ -59,8 +60,13 @@ class modifController
             session_start();
             session_destroy();
 
+            // Borramos las cookies de los datos anteriores
             setcookie('usuario_id', '', time() - 3600, "/");
             setcookie('usuario_email', '', time() - 3600, "/");
+
+            // Enviamos mail de modificación
+            $mailController = new MailController();
+            $mailController->enviarMailModificacion($userData['email'], $data['nombre']);
 
             header('Location: ../views/inicio.php?ok=modificado');
             exit;
