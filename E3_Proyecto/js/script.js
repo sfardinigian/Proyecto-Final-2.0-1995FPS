@@ -35,6 +35,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// ------------------------------ Mostrar / Ocultar contraseñas ------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.togglePass').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const input = icon.previousElementSibling;
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    });
+});
+
 // ------------------------------ Validador de contraseña ------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -86,21 +106,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const cuentaBoton = document.getElementById("cuentaBoton");
     const cuentaDatos = document.getElementById("cuentaDatos");
     const cerrarMenu = document.getElementById("cerrarMenu");
+    const fondoBlur = document.getElementById("fondoBlur");
 
     if (cuentaBoton && cuentaDatos) {
         cuentaBoton.addEventListener("click", (e) => {
             e.stopPropagation();
-            cuentaDatos.classList.toggle("activo");
+            const activo = cuentaDatos.classList.toggle("activo");
+            fondoBlur.classList.toggle("activo", activo);
         });
 
-        // Para que se cierre al tocar la "x"
         cerrarMenu.addEventListener("click", () => {
             cuentaDatos.classList.remove("activo");
+            fondoBlur.classList.remove("activo");
         });
 
         document.addEventListener("click", (e) => {
             if (!cuentaDatos.contains(e.target) && !cuentaBoton.contains(e.target)) {
                 cuentaDatos.classList.remove("activo");
+                fondoBlur.classList.remove("activo");
             }
         });
     }
@@ -418,6 +441,10 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(err => console.error("Error cargando gráfico semanal:", err));
 });
 
+// ------------------------------ Generar gráfico informativo ------------------------------
+
+
+
 // ------------------------------ Actualizar colores al cambiar de modo ------------------------------
 
 function actualizarColoresGrafico() {
@@ -447,3 +474,34 @@ function actualizarColoresGrafico() {
         span.style.color = textoColor;
     });
 }
+
+// ------------------------------ Animación de partículas de relojes ------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    const contenedor = document.getElementById("particulasRelojes");
+    if (!contenedor) return;
+
+    const cantidad = 15;
+    const iconos = ["fa-clock", "fa-hourglass", "fa-stopwatch", "fa-alarm-clock", "fa-bell"];
+
+    for (let i = 0; i < cantidad; i++) {
+        const reloj = document.createElement("i");
+        reloj.classList.add("fa-solid", iconos[Math.floor(Math.random() * iconos.length)], "particle");
+
+        // Posición horizontal aleatoria
+        reloj.style.left = Math.random() * 100 + "vw";
+
+        // Posición vertical inicial aleatoria (para que no aparezcan todos arriba)
+        reloj.style.top = Math.random() * 100 + "vh";
+
+        // Tamaño, opacidad y velocidad
+        reloj.style.fontSize = (15 + Math.random() * 20) + "px";
+        reloj.style.opacity = (0.3 + Math.random() * 0.7).toFixed(2);
+        reloj.style.animationDuration = (10 + Math.random() * 10) + "s";
+
+        // Para que al recargar empiecen al azar
+        reloj.style.animationDelay = (-Math.random() * 12) + "s";
+
+        contenedor.appendChild(reloj);
+    }
+});

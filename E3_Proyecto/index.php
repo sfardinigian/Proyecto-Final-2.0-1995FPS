@@ -53,6 +53,8 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 </head>
 
 <body>
+    <div id="particulasRelojes"></div>
+    
     <div class="modoContainer">
         <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
         <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
@@ -111,15 +113,22 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 
                 <br>
 
-                <input id="contrasenia" type="password" name="pass" placeholder=" Contraseña" required><br>
-                <input type="password" name="pass2" placeholder=" Repita la contraseña" required><br>
+                <div class="inputContainer">
+                    <input id="contrasenia" type="password" name="pass" placeholder=" Contraseña" required>
+                    <i class="fa-solid fa-eye togglePass"></i>
+                </div>
+
+                <div class="inputContainer">
+                    <input type="password" name="pass2" placeholder=" Repita la contraseña" required>
+                    <i class="fa-solid fa-eye togglePass"></i>
+                </div>
 
                 <div class="cen">
                     <div class="validPass">
                         <div class="validPassH">
                             <h4>La contraseña debe contener</h4>
                         </div>
-                        
+
                         <div class="validPassP">
                             <div id="longitud" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 8 caracteres</div>
                             <div id="numero" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 número</div>

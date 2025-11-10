@@ -53,6 +53,8 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 </head>
 
 <body>
+    <div id="particulasRelojes"></div>
+    
     <div class="modoContainer">
         <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
         <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
@@ -94,8 +96,13 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 
             <form action="../controllers/loginController.php" method="post">
                 <input type="email" name="email" placeholder=" Correo electrónico" required><br>
-                <input type="password" name="pass" placeholder=" Contraseña" required><br>
 
+                <div class="inputContainer">
+                    <input type="password" name="pass" placeholder=" Contraseña" required>
+                    <i class="fa-solid fa-eye togglePass"></i>
+                </div>
+
+                <br>
                 <br>
 
                 <label class="recordarme">

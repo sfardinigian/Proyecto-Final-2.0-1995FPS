@@ -36,6 +36,8 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 
 <body>
+    <div id="particulasRelojes"></div>
+    
     <div class="modoContainer">
         <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
         <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
@@ -81,19 +83,30 @@ if (!isset($_SESSION['usuario'])) {
 
                 <br>
 
-                <input type="password" name="passAnterior" placeholder=" Contraseña anterior" required><br>
+                <div class="inputContainer">
+                    <input type="password" name="passAnterior" placeholder=" Contraseña anterior" required>
+                    <i class="fa-solid fa-eye togglePass"></i>
+                </div>
 
                 <br>
+                <br>
 
-                <input id="contrasenia" type="password" name="passNueva" placeholder=" Contraseña nueva (opcional)"><br>
-                <input type="password" name="passNueva2" placeholder=" Repita la contraseña"><br>
+                <div class="inputContainer">
+                    <input id="contrasenia" type="password" name="passNueva" placeholder=" Contraseña nueva (opcional)">
+                    <i class="fa-solid fa-eye togglePass"></i>
+                </div>
+
+                <div class="inputContainer">
+                    <input type="password" name="passNueva2" placeholder=" Repita la contraseña">
+                    <i class="fa-solid fa-eye togglePass"></i>
+                </div>
 
                 <div class="cen">
                     <div class="validPass">
                         <div class="validPassH">
                             <h4>La contraseña debe contener</h4>
                         </div>
-                        
+
                         <div class="validPassP">
                             <div id="longitud" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 8 caracteres</div>
                             <div id="numero" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 número</div>

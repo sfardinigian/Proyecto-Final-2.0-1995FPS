@@ -168,6 +168,31 @@ body.dark .modoIcono.activo {
     color: #fff;
 }
 
+/* ------------- Ojo de ver contraseña ------------- */
+
+.inputContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.inputContainer input {
+    transition: 0.3s;
+}
+
+.inputContainer .togglePass {
+    position: absolute;
+    right: 12px;
+    top: 52%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--subrayado);
+    transition: 0.3s;
+}
+
+.inputContainer .togglePass:hover {
+    color: var(--TextoColor);
+}
+
 /* ------------- Validación de contraseña ------------- */
 
 /* Contenedor invisible de la validación al crear contraseña */
@@ -239,7 +264,7 @@ header {
     justify-content: center;
     align-items: flex-start;
     text-align: center;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .logoPrincipal {
@@ -430,7 +455,7 @@ header {
     box-shadow: 0 0 5px var(--colorSombra), 0 0 15px var(--colorSombra), 0 0 30px var(--colorSombra);
     border-radius: 50px 0 50px 50px;
     padding: 20px 40px 40px 40px;
-    z-index: 100;
+    z-index: 999999999;
     width: 280px;
     height: 500px;
     backdrop-filter: blur(10px);
@@ -448,6 +473,35 @@ header {
     display: block;
     width: 100%;
 }
+
+/* ------------- Al abrir menú para que se desenfoque el fondo ------------- */
+
+#fondoBlur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Cuando se activa */
+#fondoBlur.activo {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#cuentaDatos {
+    position: fixed;
+    z-index: 99999;
+}
+
+/* ------------- Apartado ------------- */
 
 .espaciar {
     padding-bottom: 2px;
@@ -886,11 +940,6 @@ th:last-child {
     scroll-margin-top: 140px;
 }
 
-/* Recordatorios */
-#recordatorios {
-    scroll-margin-top: 140px;
-}
-
 /* Footer */
 #creditos {
     scroll-margin-top: 140px;
@@ -960,6 +1009,36 @@ body.dark {
     --subrayado: rgb(78, 78, 78);
 
     --ftrTexto: rgb(32, 0, 80);
+}
+
+/* ------------- Menú de cuenta para celulares volteados ------------- */
+@media (min-width: 676px) and (max-width: 1200px) {
+    .cuentaDatosCss {
+        width: 500px;
+        height: 280px;
+    }
+
+    .cuentaDatosCss input,
+    .cuentaDatosCss button {
+        display: block;
+        width: 160px;
+    }
+
+    .cent2 {
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: row;
+        display: flex;
+        width: cover;
+        left: 30px;
+    }
+
+    .cent3 {
+        position: absolute;
+        display: block;
+        top: 20px;
+        left: 20px;
+    }
 }
 
 /* ------------- Responsive amplio para los botones del header y el formulario de actividades ------------- */
@@ -1106,7 +1185,6 @@ body.dark {
 }
 
 #graficoPrioridad {
-    width: 100% !important;
     max-width: 100%;
     height: auto !important;
     object-fit: contain;
@@ -1298,4 +1376,41 @@ footer {
 .footerDerechos {
     font-size: 14px;
     color: var(--subrayado);
+}
+
+/* ------------- Partículas de relojes ------------- */
+
+#particulasRelojes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    color: gray;
+    opacity: 0.8;
+    animation: caer 12s linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.9;
+    }
 }

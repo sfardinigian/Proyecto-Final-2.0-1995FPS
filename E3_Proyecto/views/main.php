@@ -49,6 +49,9 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 </head>
 
 <body>
+    <div id="fondoBlur"></div>
+    <div id="particulasRelojes"></div>
+
     <header>
         <div class="logoC">
             <div class="logoPrincipal"></div>
@@ -58,13 +61,11 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             <a href="#inicio" class="b1"><i class="fa-solid fa-house"></i> Inicio</a>
             <a href="#actividades" class="b1"><i class="fa-solid fa-clipboard"></i></i> Actividades</a>
             <a href="#graficos" class="b1"><i class="fa-solid fa-chart-simple"></i> Gráficos</a>
-            <a href="#recordatorios" class="b1"><i class="fa-solid fa-bell"></i> Recordatorios</a>
             <a href="#creditos" class="b1"><i class="fa-solid fa-users"></i> Créditos</a>
 
             <a href="#inicio" class="b2"><i class="fa-solid fa-house"></i></a>
             <a href="#actividades" class="b2"><i class="fa-solid fa-clipboard"></i></i></a>
             <a href="#graficos" class="b2"><i class="fa-solid fa-chart-simple"></i></a>
-            <a href="#recordatorios" class="b2"><i class="fa-solid fa-bell"></i></a>
             <a href="#creditos" class="b2"><i class="fa-solid fa-users"></i></a>
         </div>
 
@@ -81,9 +82,11 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                 <h1>Cuenta</h1>
             </div>
 
-            <p class="subrayado"><?php echo htmlspecialchars($usuarioSesion['nombre']); ?></p>
-            <p class="subrayado"><?php echo htmlspecialchars($usuarioSesion['apellido']); ?></p>
-            <p class="subrayado"><?php echo htmlspecialchars($usuarioSesion['email']); ?></p>
+            <div class="dataC">
+                <p class="subrayado"><?php echo htmlspecialchars($usuarioSesion['nombre']); ?></p>
+                <p class="subrayado"><?php echo htmlspecialchars($usuarioSesion['apellido']); ?></p>
+                <p class="subrayado"><?php echo htmlspecialchars($usuarioSesion['email']); ?></p>
+            </div>
 
             <div class="cent2">
                 <form action="modif.php" class="espaciar">
@@ -461,16 +464,6 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                         </div>
                     </div>
                 <?php } ?>
-            </section>
-        </div>
-
-        <div class="contenidos" id="recordatorios">
-            <section class="contenidos1">
-                <h1>Recordatorios <i class="fa-solid fa-comment"></i></h1>
-            </section>
-
-            <section class="contenidos2">
-                <p>Todavía no confirmado.</p>
             </section>
         </div>
     </div>
