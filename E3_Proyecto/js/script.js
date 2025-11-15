@@ -443,7 +443,129 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ------------------------------ Generar gráfico informativo ------------------------------
 
+let chartInformativo;
 
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("../routers/graficoInfoRouter.php")
+        .then(response => response.json())
+        .then(data => {
+            const ctx = document.getElementById("graficoInformativo").getContext("2d");
+            const textoColor = getComputedStyle(document.body).getPropertyValue("--textoColor").trim();
+            const colorPrincipal = getComputedStyle(document.body).getPropertyValue("--fondoBoton").trim();
+
+            const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+            const horasPorDia = {};
+            diasSemana.forEach(d => horasPorDia[d] = 0);
+
+            data.forEach(item => {
+                horasPorDia[item.dia] = parseFloat(item.horas);
+            });
+
+            const dias = diasSemana;
+            const horas = dias.map(d => horasPorDia[d]);
+
+            chartInformativo = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: dias,
+                    datasets: [
+                        {
+                            label: "Horas totales por día",
+                            data: horas,
+                            backgroundColor: colorPrincipal,
+                            borderWidth: 0,
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: "Día de la semana",
+                                color: textoColor,
+                                font: { family: "Quicksand", size: 16 }
+                            },
+                            ticks: {
+                                color: textoColor,
+                                font: { family: "Quicksand", size: 14 }
+                            },
+                            grid: { color: "rgba(150,150,150,0.3)" }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Horas totales",
+                                color: textoColor,
+                                font: { family: "Quicksand", size: 16 }
+                            },
+                            ticks: {
+                                color: textoColor,
+                                font: { family: "Quicksand", size: 12 }
+                            },
+                            grid: { color: "rgba(150,150,150,0.3)" }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "Distribución semanal",
+                            color: textoColor,
+                            font: { family: "Quicksand", size: 18 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const horas = context.parsed.y;
+                                    const h = Math.floor(horas);
+                                    const m = Math.round((horas - h) * 60);
+                                    return `${h}h ${m}m`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Resumen
+            const totalHoras = horas.reduce((a, b) => a + b, 0);
+            const maxHoras = Math.max(...horas);
+            const minHoras = Math.min(...horas);
+            const diaMax = dias[horas.indexOf(maxHoras)];
+            const diaMin = dias[horas.indexOf(minHoras)];
+            const diasConActividades = data.length;
+
+            const mensajeElem = document.getElementById("mensajeInformativo");
+            const tituloElem = document.getElementById("tituloInformativo");
+
+            const promedio = totalHoras / diasConActividades;
+            let mensaje = "";
+
+            if (diasConActividades === 1) {
+                mensaje = `🕐 <b>Actividad puntual:</b> solo registraste tareas el ${data[0].dia}.`;
+            } else if (diasConActividades === 2) {
+                mensaje = `📅 <b>Actividad ligera:</b> solo tuviste tareas en dos días (${data[0].dia} y ${data[1].dia}).`;
+            } else if (maxHoras - minHoras < 1 && diasConActividades > 2) {
+                mensaje = "📊 <b>Semana equilibrada:</b> mantuviste una buena distribución de tiempo.";
+            } else if (maxHoras > promedio * 1.5) {
+                mensaje = `🔥 <b>Semana intensa:</b> el día más cargado es ${diaMax} (${maxHoras.toFixed(1)}h). Recordá equilibrar tu descanso.`;
+            } else if (minHoras === 0) {
+                mensaje = `⚖️ <b>Día libre detectado:</b> no hubo actividades el ${diaMin}. Aprovechalo para planificar o descansar.`;
+            } else {
+                mensaje = `✅ <b>Semana con buena actividad:</b> promedio de ${promedio.toFixed(1)}h diarias.`;
+            }
+
+            tituloElem.textContent = "Resumen semanal";
+            mensajeElem.innerHTML = mensaje;
+        })
+        .catch(err => console.error("Error cargando gráfico informativo:", err));
+});
 
 // ------------------------------ Actualizar colores al cambiar de modo ------------------------------
 
@@ -473,6 +595,25 @@ function actualizarColoresGrafico() {
     leyendaTextos.forEach(span => {
         span.style.color = textoColor;
     });
+
+    // Gráfico informativo
+    if (typeof chartInformativo !== "undefined" && chartInformativo) {
+        const textoColor = getComputedStyle(document.body).getPropertyValue("--textoColor").trim();
+        const colorPrincipal = getComputedStyle(document.body).getPropertyValue("--fondoBoton").trim();
+
+        chartInformativo.options.scales.x.title.color = textoColor;
+        chartInformativo.options.scales.y.title.color = textoColor;
+        chartInformativo.options.scales.x.ticks.color = textoColor;
+        chartInformativo.options.scales.y.ticks.color = textoColor;
+        chartInformativo.options.plugins.title.color = textoColor;
+
+        chartInformativo.data.datasets.forEach(dataset => {
+            dataset.backgroundColor = chartInformativo.data.labels.map(() => colorPrincipal);
+        });
+
+        chartInformativo.update();
+    }
+
 }
 
 // ------------------------------ Animación de partículas de relojes ------------------------------

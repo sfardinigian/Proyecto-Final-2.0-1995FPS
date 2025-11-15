@@ -16,4 +16,3 @@ $datos = $actividad->getActividadesSemanales($id_usuario);
 // Enviamos el JSON
 header('Content-Type: application/json');
 echo json_encode($datos);
-?>

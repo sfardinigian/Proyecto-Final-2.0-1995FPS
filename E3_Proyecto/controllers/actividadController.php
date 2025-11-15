@@ -17,20 +17,29 @@ class actividadController
     {
         $actividad = new Actividad;
 
-        // Usuario de la sesión activa
+        // Conseguimos el usuario de la sesión activa
         $id_usuario = $_SESSION['usuario']['id_usuario'];
 
         return $actividad->getActividadesPorPrioridad($id_usuario);
     }
-    
-      public function obtenerActividadesSemanales($id_usuario)
+
+    public function obtenerActividadesSemanales($id_usuario)
     {
         $actividad = new Actividad;
 
-        // Usuario de la sesión activa
+        // Conseguimos el usuario de la sesión activa
         $id_usuario = $_SESSION['usuario']['id_usuario'];
 
         return $actividad->getActividadesSemanales($id_usuario);
+    }
+
+    public function obtenerActividadesPorDia()
+    {
+        $actividad = new Actividad;
+        $id_usuario = $_SESSION['usuario']['id_usuario'];
+
+        // Conseguimos el usuario de la sesión activa
+        return $actividad->getActividadesPorDia($id_usuario);
     }
 
     public function crearActividad($data)

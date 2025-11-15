@@ -399,11 +399,11 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
             <section class="contenidos2">
                 <?php if (!empty($actividades) && !isset($actividades['message'])) { ?>
-                    <div class="graficoSemanalSiV">
+                    <div class="graficoSiV">
                         <div id="leyendaSemanal" style="margin-top: 20px;"></div>
                         <canvas id="graficoSemanal" width="600" height="300"></canvas>
                     </div>
-                    <div class="graficoSemanalNoV">
+                    <div class="graficoNoV">
                         <h3 class="graficoAlerta">⚠️ Gire su celular para visualizar el gráfico.</h3>
                     </div>
                 <?php } else { ?>
@@ -418,7 +418,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
         <div class="contenidos">
             <section class="contenidos1">
-                <h1>Gráfico de prioridad <i class="fa-solid fa-chart-pie"></i></h1>
+                <h1>Gráfico prioritario <i class="fa-solid fa-chart-pie"></i></h1>
             </section>
 
             <section class="contenidos2">
@@ -456,7 +456,21 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 
             <section class="contenidos2">
                 <?php if (!empty($actividades) && !isset($actividades['message'])) { ?>
-                    <p>Contenido si hay actividad.</p>
+                    <div class="graficoSiV">
+                        <div class="cont-inf">
+                            <div id="resumenInformativo" class="resumen-informativo">
+                                <h3 id="tituloInformativo">Resumen semanal</h3>
+                                <p id="mensajeInformativo">Analizando tus actividades...</p>
+                            </div>
+
+                            <div id="contenedorInfo" class="grafico-container2">
+                                <canvas id="graficoInformativo"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graficoNoV">
+                        <h3 class="graficoAlerta">⚠️ Gire su celular para visualizar el gráfico.</h3>
+                    </div>
                 <?php } else { ?>
                     <div class="noActividad">
                         <div class="noActividad1">
@@ -473,7 +487,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             <h3 class="footerTitulo"><i class="fa-solid fa-clock"></i> Proyecto Final - Cronos</h3>
 
             <p class="footerTexto">
-                Desarrollado por <b>Villada Gonzalo</b>, <b>Ibarra Franco</b> y <b>Sfardini Gian</b><br>
+                Desarrollado por <b>Villada Gonzalo</b> y <b>Sfardini Gian</b><br>
                 Tecnicatura Superior en Análisis y Desarrollo de Software - 3er Año
             </p>
 

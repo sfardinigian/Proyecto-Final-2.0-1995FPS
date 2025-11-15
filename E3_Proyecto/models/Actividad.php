@@ -16,7 +16,19 @@ class Actividad
     // READ - Obtener todas las actividades
     public function getByUsuario($id_usuario)
     {
-        $query = "SELECT a.id_actividad, a.titulo, a.hora_inicio, a.hora_fin, a.color, a.prioridad, a.dia FROM actividades a INNER JOIN usuarios u ON a.id_usuario = u.id_usuario WHERE u.id_usuario = ? ORDER BY a.dia, a.hora_inicio";
+        $query = "SELECT a.id_actividad,
+                         a.titulo,
+                         a.hora_inicio,
+                         a.hora_fin,
+                         a.color,
+                         a.prioridad,
+                         a.dia
+                         FROM actividades a
+                         INNER JOIN usuarios u
+                         ON a.id_usuario = u.id_usuario
+                         WHERE u.id_usuario = ?
+                         ORDER BY a.dia, a.hora_inicio";
+
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $id_usuario);
         $stmt->execute();
@@ -39,6 +51,7 @@ class Actividad
     public function create($data)
     {
         $query = "INSERT INTO actividades (id_usuario, titulo, hora_inicio, hora_fin, prioridad, color, dia) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
         $stmt = $this->db->prepare($query);
 
         $stmt->bind_param('issssss', $data['id_usuario'], $data['titulo'], $data['hora_inicio'], $data['hora_fin'], $data['prioridad'], $data['color'], $data['dia']);
@@ -55,6 +68,7 @@ class Actividad
     public function delete($id)
     {
         $query = "DELETE FROM actividades WHERE id_actividad=?";
+
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -84,7 +98,14 @@ class Actividad
     // Función para obtener las prioridades
     public function getActividadesPorPrioridad($id_usuario)
     {
-        $query = "SELECT a.prioridad, COUNT(*) AS cantidad FROM actividades a INNER JOIN usuarios u ON a.id_usuario = u.id_usuario WHERE u.id_usuario = ? GROUP BY a.prioridad";
+        $query = "SELECT a.prioridad,
+                         COUNT(*)
+                         AS cantidad
+                         FROM actividades a
+                         INNER JOIN usuarios u
+                         ON a.id_usuario = u.id_usuario
+                         WHERE u.id_usuario = ?
+                         GROUP BY a.prioridad";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $id_usuario);
@@ -107,7 +128,18 @@ class Actividad
     // Función para obtener las actividades semanales
     public function getActividadesSemanales($id_usuario)
     {
-        $query = "SELECT a.id_actividad, a.titulo, a.hora_inicio, a.hora_fin, a.color, a.prioridad, a.dia FROM actividades a INNER JOIN usuarios u ON a.id_usuario = u.id_usuario WHERE u.id_usuario = ? ORDER BY a.dia, a.hora_inicio";
+        $query = "SELECT a.id_actividad,
+                         a.titulo,
+                         a.hora_inicio,
+                         a.hora_fin,
+                         a.color,
+                         a.prioridad,
+                         a.dia
+                         FROM actividades a
+                         INNER JOIN usuarios u
+                         ON a.id_usuario = u.id_usuario
+                         WHERE u.id_usuario = ?
+                         ORDER BY a.dia, a.hora_inicio";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $id_usuario);
@@ -125,5 +157,29 @@ class Actividad
         }
 
         return $data_arr ?: ['message' => 'Sin datos'];
+    }
+
+    // Función para obtener el gráfico informativo semanal
+    public function getActividadesPorDia($id_usuario)
+    {
+        $query = "SELECT dia,
+                         SUM(TIMESTAMPDIFF(MINUTE, hora_inicio, hora_fin)) / 60
+                         AS horas
+                         FROM actividades
+                         WHERE id_usuario = ?
+                         GROUP BY dia
+                         ORDER BY FIELD(dia, 'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo')";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $id_usuario);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        $data_arr = [];
+        while ($data = $res->fetch_assoc()) {
+            $data_arr[] = $data;
+        }
+
+        return $data_arr;
     }
 }
