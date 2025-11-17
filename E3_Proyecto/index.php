@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 session_start();
 
 // Si está la sesión activa, redirigir al main

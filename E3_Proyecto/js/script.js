@@ -646,3 +646,323 @@ document.addEventListener("DOMContentLoaded", () => {
         contenedor.appendChild(reloj);
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const introInfo = document.getElementById("introInfo");
+  const cerrarIntro = document.getElementById("cerrarIntro");
+
+  const modalIntro = document.getElementById("modalIntro");
+  const fondoBlurIntro = document.getElementById("fondoBlurIntro");
+
+  const cerrarModalIntro = document.getElementById("cerrarModalIntro");
+
+  const formIntroCancelar = document.getElementById("formIntroCancelar");
+  const formIntroConfirmar = document.getElementById("formIntroConfirmar");
+
+  // Abrir modal al tocar la X de la intro
+  cerrarIntro.addEventListener("click", () => {
+    modalIntro.classList.add("activo");
+    fondoBlurIntro.classList.add("activo");
+  });
+
+  // Cerrar modal
+  const cerrar = () => {
+    modalIntro.classList.remove("activo");
+    fondoBlurIntro.classList.remove("activo");
+  };
+
+  cerrarModalIntro.addEventListener("click", cerrar);
+  formIntroCancelar.addEventListener("submit", cerrar);
+
+  // Confirmar ocultar
+  formIntroConfirmar.addEventListener("submit", () => {
+    introInfo.style.display = "none";
+    cerrar();
+  });
+});
+
+// ------------------------------ Dashboard ------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("../routers/actividadActualRouter.php")
+  .then(res => {
+    if (!res.ok) throw new Error("Network response was not ok");
+    return res.json();
+  })
+  .then(data => {
+    const cont = document.getElementById("actividadActual");
+
+    // Si viene null o no tiene título, mostramos vista vacía
+    if (!data || typeof data !== 'object' || !data.titulo) {
+      cont.innerHTML = `
+        <div class="actividad-vacia">
+          </div>
+          <div class="actividad-vacia__texto">
+            <strong>No tienes ninguna actividad asignada</strong>
+            <p class="actividad-vacia__sub">Aprovechá este tiempo libre para descansar o avanzar tareas pequeñas.</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // Si hay actividad, render normal
+    cont.innerHTML = `
+      <div class="actividad-activa">
+        <div class="actividad-activa__left">
+          <span class="actividad-color" style="background:${data.color || '#888'}"></span>
+        </div>
+        <div class="actividad-activa__body">
+          <h4 class="actividad-titulo">${escapeHtml(data.titulo)}</h4>
+          <p class="actividad-hora">${escapeHtml(data.hora_inicio)} - ${escapeHtml(data.hora_fin)}</p>
+          <p class="actividad-prioridad">${escapeHtml(data.prioridad || '')}</p>
+        </div>
+      </div>
+    `;
+  })
+  .catch(err => {
+    console.error("Error al cargar actividad actual:", err);
+    const cont = document.getElementById("actividadActual");
+    cont.innerHTML = `<p class="actividad-error">Error cargando la actividad.</p>`;
+  });
+
+/* Helper básico para evitar inyección / caracteres raros en HTML interpolado */
+function escapeHtml(str) {
+  if (!str && str !== 0) return '';
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("../routers/proximaActividadRouter.php")
+        .then(res => res.json())
+        .then(data => {
+            const cont = document.getElementById("proximaActividad");
+
+            if (!data) {
+                cont.innerHTML = "No hay próximas actividades.";
+                return;
+            }
+
+            cont.innerHTML = `
+                <h4>${data.titulo}</h4>
+                <p>${data.hora_inicio} - ${data.hora_fin}</p>
+            `;
+        });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("../routers/tareasDiaRouter.php")
+        .then(res => res.json())
+        .then(tareas => {
+            const ul = document.getElementById("tareasDia");
+            const barra = document.getElementById("progresoBarra");
+            const texto = document.getElementById("progresoTexto");
+
+            ul.innerHTML = "";
+
+            tareas.forEach(t => {
+                ul.innerHTML += `
+                    <li>
+                        <input type="checkbox" class="check-tarea" ${t.completada == 1 ? "checked" : ""}>
+                        <span class="titulo-tarea" ${t.completada == 1 ? 'style="text-decoration: line-through; opacity:.6;"' : ''}>
+                            ${t.titulo}
+                        </span>
+                    </li>
+                `;
+            });
+
+            // Función para actualizar progreso
+            function actualizarProgreso() {
+                const checks = ul.querySelectorAll(".check-tarea");
+                const total = checks.length;
+                const marcadas = [...checks].filter(c => c.checked).length;
+
+                const porcentaje = total === 0 ? 0 : Math.round((marcadas / total) * 100);
+
+                barra.style.width = porcentaje + "%";
+                texto.textContent = `${porcentaje}% completado`;
+            }
+
+            // Aplicar estilos dinámicos y actualizar progreso
+            ul.querySelectorAll('.check-tarea').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const titulo = e.target.nextElementSibling;
+                    if(e.target.checked){
+                        titulo.style.textDecoration = 'line-through';
+                        titulo.style.opacity = '.6';
+                    } else {
+                        titulo.style.textDecoration = 'none';
+                        titulo.style.opacity = '1';
+                    }
+
+                    actualizarProgreso();
+                });
+            });
+
+            // Calcular progreso inicial al cargar
+            actualizarProgreso();
+        });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("../routers/horasLibresRouter.php")
+        .then(res => res.json())
+        .then(data => {
+            const elemLibres = document.getElementById("horasLibres");
+            const elemConsejo = document.getElementById("consejoHoras");
+            const elemGrafico = document.getElementById("graficoHoras"); // div canvas para mini gráfico
+
+            const horasLibres = (data.libres / 60).toFixed(2);
+            const horasOcupadas = (data.ocupados / 60).toFixed(2);
+            const totalHoras = parseFloat(horasLibres) + parseFloat(horasOcupadas);
+            const porcentajeOcupado = ((horasOcupadas / totalHoras) * 100).toFixed(1);
+
+            elemLibres.innerText = `Horas libres: ${horasLibres} h | Horas ocupadas: ${horasOcupadas} h`;
+
+            // Consejo más detallado según porcentaje
+            let consejo = "";
+            if (porcentajeOcupado >= 90) {
+                consejo = "🔥 Día extremadamente ocupado. Considerá delegar tareas y descansar bien.";
+            } else if (porcentajeOcupado >= 75) {
+                consejo = "⚠️ Día muy ocupado. Prioriza lo urgente y no te sobrecargues.";
+            } else if (porcentajeOcupado >= 50) {
+                consejo = "🟠 Día equilibrado pero con carga significativa. Planificá pausas estratégicas.";
+            } else if (porcentajeOcupado >= 25) {
+                consejo = "🟢 Día relajado. Aprovechá para avanzar en proyectos personales o descansar.";
+            } else {
+                consejo = "🌿 Día muy tranquilo. Ideal para organizar y planificar la semana.";
+            }
+
+            elemConsejo.innerText = consejo;
+
+            // Mini gráfico tipo doughnut para representar porcentaje
+            if (elemGrafico) {
+                const ctx = elemGrafico.getContext("2d");
+                new Chart(ctx, {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Ocupadas", "Libres"],
+                        datasets: [{
+                            data: [porcentajeOcupado, 100 - porcentajeOcupado],
+                            backgroundColor: ["#ff4d4d", "#4caf50"],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                         responsive: false,
+                        cutout: "70%",
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => `${context.label}: ${context.parsed}%`
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    fetch("../routers/donutRouter.php")
+        .then(res => res.json())
+        .then(data => {
+
+            const ctx = document.getElementById("graficoActividades").getContext("2d");
+
+            const totalMinutosDia = 24 * 60;
+
+            // Total minutos actividades
+            const minutosActividades = data.reduce((sum, act) => sum + parseInt(act.minutos), 0);
+
+            // Procesar proporciones
+            const labels = data.map(x => x.titulo);
+            const valores = data.map(x => ((x.minutos / totalMinutosDia) * 100));
+            const colores = data.map(x => x.color || "#999");
+
+            // Agregar horas libres
+            const porcentajeLibre = ((totalMinutosDia - minutosActividades) / totalMinutosDia * 100);
+            labels.push("Horas libres");
+            valores.push(porcentajeLibre);
+            colores.push("#d3d3d3");
+
+            const textoColor = getComputedStyle(document.body)
+                .getPropertyValue("--textoColor")
+                .trim();
+
+            // Destruir si existe
+            if (window.chartDonut) window.chartDonut.destroy();
+
+            window.chartDonut = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels,
+                    datasets: [{
+                        data: valores,
+                        backgroundColor: colores,
+                        borderWidth: 2,
+                        borderColor: "rgba(255,255,255,0.35)",
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    cutout: "60%",
+                    layout: { padding: 10 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: "rgba(0,0,0,0.85)",
+                            padding: 10,
+                            titleFont: { family: "Quicksand", size: 14 },
+                            bodyFont: { family: "Quicksand", size: 13 },
+                            callbacks: {
+                                label: function (context) {
+                                    const label = context.label;
+                                    const porcentaje = context.raw.toFixed(1);
+                                    return `${label}: ${porcentaje}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(err => console.error("Error Donut:", err));
+
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("../routers/importantesRouter.php")
+        .then(res => res.json())
+        .then(lista => {
+            const ul = document.getElementById("actividadesImportantes");
+
+            ul.innerHTML = "";
+
+            lista.forEach(act => {
+                ul.innerHTML += `
+                    <li style="border-left: 4px solid ${act.color}; padding-left: 8px;">
+                        <strong>${act.titulo}</strong>
+                        (${act.hora_inicio} - ${act.hora_fin})
+                    </li>
+                `;
+            });
+        });
+});
+
+

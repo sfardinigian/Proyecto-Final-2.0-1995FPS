@@ -114,6 +114,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
     <div class="contInv">
         <section class="contenidos" id="inicio">
             <div class="contenidos1">
+               <span id="cerrarIntro" class="cerrarMenu">&times;</span>
                 <h1>Hola <?php echo htmlspecialchars($usuarioSesion['nombre']); ?>, bienvenido a Cronos <i class="fa-solid fa-alarm-clock"></i></h1>
             </div>
             <div class="contenidos2">
@@ -137,6 +138,81 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                 <p>✨ Con Cronos, la organización deja de ser una carga y se convierte en una herramienta que te da más tiempo para lo que realmente importa.</p>
             </div>
         </section>
+
+      <section class="contenidos1">
+ <h1>¡Hola, <?php echo htmlspecialchars($usuarioSesion['nombre']); ?>! Ésta es información sobre tu día</h1>
+</section>
+
+<section class="contenidos2">
+      <!-- <p class="dash-subtitle">Resumen claro de tu día</p> -->
+  <section id="dashboardDiario" class="dashboard">
+
+    <!-- GRID PRINCIPAL -->
+    <div class="dashboard-grid">
+
+      <!-- HORAS LIBRES -->
+      <div class="dash-card" id="horasLibresCard">
+        <h3>Horas libres</h3>
+
+        <p id="horasLibres" class="horas-numero"></p>
+        <div class="horas-flex">
+          <div>
+             <canvas id="graficoHoras"></canvas>
+            <p id="consejoHoras" class="horas-consejo"></p>
+          </div>
+        </div>
+      </div>
+
+        <!-- ACTIVIDAD ACTUAL -->
+      <div class="dash-card" id="actividadActualCard">
+        <h3>Actividad actual <i class="fa-regular fa-clock"></i></h3> 
+        <div id="actividadActual" class="dash-card-body"></div>
+      </div>
+
+      <!-- PROXIMA ACTIVIDAD -->
+      <div class="dash-card" id="proximaActividadCard">
+        <h3>Próxima actividad</h3>
+        <div id="proximaActividad" class="dash-card-body"></div>
+      </div>
+
+      <!-- GRAFICO PRINCIPAL -->
+      <div class="dash-card wide" id="graficoActividadesCard">
+        <h3>Distribución del día</h3>
+        <canvas id="graficoActividades"></canvas>
+        <div id="leyendaDonut" class="leyenda-donut"></div>
+
+      </div>
+
+      <!-- TAREAS DEL DÍA -->
+      <div class="dash-card wide" id="tareasDiaCard">
+        <h3>Tareas del día</h3>
+        <ul id="tareasDia" class="dash-list"></ul>
+      </div>
+
+      <!-- PROGRESO DEL DÍA -->
+<div class="dash-card" id="progresoDiaCard">
+    <h3>Progreso del día</h3>
+
+    <div class="progreso-wrapper">
+        <div id="progresoBarra"></div>
+    </div>
+
+    <p id="progresoTexto" class="progreso-texto">0% completado</p>
+</div>
+
+
+      <!-- ACTIVIDADES IMPORTANTES -->
+      <div class="dash-card wide" id="actividadesImportantesCard">
+        <h3>Actividades importantes</h3>
+        <ul id="actividadesImportantes" class="dash-list importantes"></ul>
+      </div>
+
+    </div>
+  </section>
+            </section>
+
+
+       
 
         <div class="contenidos" id="actividades">
             <section class="contenidos1">
@@ -481,6 +557,34 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
     </div>
+
+ <!-- Fondo blur del modal -->
+<div id="fondoBlurIntro" class="fondoBlurModal"></div>
+
+<!-- Modal confirmar ocultar intro -->
+<div id="modalIntro" class="cuentaDatosCss modalOcultar">
+  <span id="cerrarModalIntro" class="cerrarMenu">&times;</span>
+
+  <h2 class="cent subrayado">Ocultar introducción</h2>
+
+  <p style="margin-top: 20px; text-align:center;">
+    ¿Querés ocultar la información introductoria?
+  </p>
+
+  <div class="cent2">
+    <div class="contenedorBotones">
+      <form id="formIntroConfirmar" class="espaciar" onsubmit="return false;">
+        <input type="submit" value="Ocultar introducción">
+      </form>
+
+      <form id="formIntroCancelar" class="espaciar" onsubmit="return false;">
+        <input type="submit" value="Cancelar">
+      </form>
+    </div>
+  </div>
+</div>
+
+
 
     <footer id="creditos">
         <div class="footerContenido">
