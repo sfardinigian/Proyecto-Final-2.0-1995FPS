@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 require_once '../controllers/usuarioController.php';
 require_once '../controllers/actividadController.php';
 
-$actividadController = new Actividad();
+$actividadController = new actividad();
 
 $usuarioSesion = $_SESSION['usuario'];
 $id_usuario = $usuarioSesion['id_usuario'];
@@ -23,7 +23,6 @@ $actividades = $actividadController->getByUsuario($id_usuario);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
     <script>
         if (localStorage.getItem("theme") === "dark") {
@@ -442,7 +441,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                             <p id="progresoTexto" class="progreso-texto">0% completado</p>
                         </div>
 
-                        <div class="dash-card wide" id="actividadesImportantesCard">
+                        <div class="dash-card wide1" id="actividadesImportantesCard">
                             <h3>Actividades importantes</h3>
                             <ul id="actividadesImportantes" class="dash-list importantes"></ul>
                         </div>

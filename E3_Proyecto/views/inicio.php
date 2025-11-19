@@ -54,7 +54,7 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 
 <body>
     <div id="particulasRelojes"></div>
-    
+
     <div class="modoContainer">
         <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
         <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
@@ -73,6 +73,9 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
                             break;
                         case 'pass':
                             echo "La contraseña es incorrecta.<br><br>";
+                            break;
+                        case 'sesion':
+                            echo "No ha iniciado sesión.<br><br>";
                             break;
                     }
                     ?>

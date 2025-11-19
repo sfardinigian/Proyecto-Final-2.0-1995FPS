@@ -45,7 +45,7 @@ class Dashboard
                          LIMIT 1";
 
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iiss', $id_usuario, $dia, $horaActual, $horaActual);
+        $stmt->bind_param('isss', $id_usuario, $dia, $horaActual, $horaActual);
         $stmt->execute();
 
         $result = $stmt->get_result()->fetch_assoc();

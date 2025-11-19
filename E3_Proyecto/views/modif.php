@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Si no hay sesión, redirigir a index.php (registro)
 if (!isset($_SESSION['usuario'])) {
     header('Location: inicio.php?error=sesion');
     exit;

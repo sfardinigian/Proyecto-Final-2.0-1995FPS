@@ -1603,13 +1603,18 @@ footer {
     min-height: fit-content;
 }
 
-/* Abarcan dos columnas pero sin crecer demasiado */
+/* Abarca 1 columna */
 .dash-card.wide {
+    grid-column: span 1;
+}
+
+/* Abarca 2 columnas */
+.dash-card.wide1 {
     grid-column: span 2;
 }
 
 @media(max-width: 700px) {
-    .dash-card.wide {
+    .dash-card.wide1 {
         grid-column: span 1;
     }
 }

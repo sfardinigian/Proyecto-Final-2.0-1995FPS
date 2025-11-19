@@ -648,6 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ------------------------------ Dashboard ------------------------------
 
+// Actividad actual
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/actividadActualRouter.php")
         .then(res => {
@@ -659,31 +660,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Si viene null o no tiene título, mostramos vista vacía
             if (!data || typeof data !== 'object' || !data.titulo) {
-                cont.innerHTML = `
-        <div class="actividad-vacia">
-          </div>
-          <div class="actividad-vacia__texto">
-            <strong>No tienes ninguna actividad asignada</strong>
-            <p class="actividad-vacia__sub">Aprovechá este tiempo libre para descansar o avanzar tareas pequeñas.</p>
-          </div>
-        </div>
-      `;
+                cont.innerHTML = `<div class="actividad-vacia">
+                                  </div>
+                                  <div class="actividad-vacia__texto">
+                                  <strong>No tienes ninguna actividad asignada</strong>
+                                  <p class="actividad-vacia__sub">Aprovechá este tiempo libre para descansar o avanzar tareas pequeñas.</p>
+                                  </div>
+                                  </div>`;
                 return;
             }
 
             // Si hay actividad, render normal
-            cont.innerHTML = `
-      <div class="actividad-activa">
-        <div class="actividad-activa__left">
-          <span class="actividad-color" style="background:${data.color || '#888'}"></span>
-        </div>
-        <div class="actividad-activa__body">
-          <h4 class="actividad-titulo">${escapeHtml(data.titulo)}</h4>
-          <p class="actividad-hora">${escapeHtml(data.hora_inicio)} - ${escapeHtml(data.hora_fin)}</p>
-          <p class="actividad-prioridad">${escapeHtml(data.prioridad || '')}</p>
-        </div>
-      </div>
-    `;
+            cont.innerHTML = `<div class="actividad-activa">
+                              <div class="actividad-activa__left">
+                              <span class="actividad-color" style="background:${data.color || '#888'}"></span>
+                              </div>
+                              <div class="actividad-activa__body">
+                              <h4 class="actividad-titulo">${escapeHtml(data.titulo)}</h4>
+                              <p class="actividad-hora">${escapeHtml(data.hora_inicio)} - ${escapeHtml(data.hora_fin)}</p>
+                              <p class="actividad-prioridad">${escapeHtml(data.prioridad || '')}</p>
+                              </div>
+                              </div>`;
         })
         .catch(err => {
             console.error("Error al cargar actividad actual:", err);
@@ -691,7 +688,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cont.innerHTML = `<p class="actividad-error">Error cargando la actividad.</p>`;
         });
 
-    /* Helper básico para evitar inyección / caracteres raros en HTML interpolado */
+    // Helper básico para evitar inyección o caracteres raros en HTML interpolado
     function escapeHtml(str) {
         if (!str && str !== 0) return '';
         return String(str)
@@ -703,6 +700,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Próxima actividad
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/proximaActividadRouter.php")
         .then(res => res.json())
@@ -721,6 +719,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
+// Tareas del día
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/tareasDiaRouter.php")
         .then(res => res.json())
@@ -732,14 +731,12 @@ document.addEventListener("DOMContentLoaded", () => {
             ul.innerHTML = "";
 
             tareas.forEach(t => {
-                ul.innerHTML += `
-                    <li>
-                        <input type="checkbox" class="check-tarea" ${t.completada == 1 ? "checked" : ""}>
-                        <span class="titulo-tarea" ${t.completada == 1 ? 'style="text-decoration: line-through; opacity:.6;"' : ''}>
-                            ${t.titulo}
-                        </span>
-                    </li>
-                `;
+                ul.innerHTML += `<li>
+                                 <input type="checkbox" class="check-tarea" ${t.completada == 1 ? "checked" : ""}>
+                                 <span class="titulo-tarea" ${t.completada == 1 ? 'style="text-decoration: line-through; opacity:.6;"' : ''}>
+                                 ${t.titulo}
+                                 </span>
+                                 </li>`;
             });
 
             // Función para actualizar progreso
@@ -775,6 +772,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
+// Horas libres
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/horasLibresRouter.php")
         .then(res => res.json())
@@ -836,6 +834,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
+// Gráfico de donut
 document.addEventListener("DOMContentLoaded", () => {
 
     fetch("../routers/donutRouter.php")
@@ -905,6 +904,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(err => console.error("Error Donut:", err));
 });
 
+// Actividades importantes
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/importantesRouter.php")
         .then(res => res.json())
@@ -914,12 +914,10 @@ document.addEventListener("DOMContentLoaded", () => {
             ul.innerHTML = "";
 
             lista.forEach(act => {
-                ul.innerHTML += `
-                    <li style="border-left: 4px solid ${act.color}; padding-left: 8px;">
-                        <strong>${act.titulo}</strong>
-                        (${act.hora_inicio} - ${act.hora_fin})
-                    </li>
-                `;
+                ul.innerHTML += `<li style="border-left: 4px solid ${act.color}; padding-left: 8px;">
+                                 <strong>${act.titulo}</strong>
+                                 (${act.hora_inicio} - ${act.hora_fin})
+                                 </li>`;
             });
         });
 });
