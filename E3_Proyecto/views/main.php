@@ -60,11 +60,13 @@ $actividades = $actividadController->getByUsuario($id_usuario);
         <div class="botonesIn">
             <a href="#inicio" class="b1"><i class="fa-solid fa-house"></i> Inicio</a>
             <a href="#actividades" class="b1"><i class="fa-solid fa-clipboard"></i></i> Actividades</a>
+            <a href="#dashboard" class="b1"><i class="fa-solid fa-layer-group"></i> Dashboard</a>
             <a href="#graficos" class="b1"><i class="fa-solid fa-chart-simple"></i> Gráficos</a>
             <a href="#creditos" class="b1"><i class="fa-solid fa-users"></i> Créditos</a>
 
             <a href="#inicio" class="b2"><i class="fa-solid fa-house"></i></a>
             <a href="#actividades" class="b2"><i class="fa-solid fa-clipboard"></i></i></a>
+            <a href="#dashboard" class="b2"><i class="fa-solid fa-layer-group"></i></a>
             <a href="#graficos" class="b2"><i class="fa-solid fa-chart-simple"></i></a>
             <a href="#creditos" class="b2"><i class="fa-solid fa-users"></i></a>
         </div>
@@ -114,7 +116,6 @@ $actividades = $actividadController->getByUsuario($id_usuario);
     <div class="contInv">
         <section class="contenidos" id="inicio">
             <div class="contenidos1">
-               <span id="cerrarIntro" class="cerrarMenu">&times;</span>
                 <h1>Hola <?php echo htmlspecialchars($usuarioSesion['nombre']); ?>, bienvenido a Cronos <i class="fa-solid fa-alarm-clock"></i></h1>
             </div>
             <div class="contenidos2">
@@ -123,11 +124,11 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                 <p>En un mundo lleno de compromisos, estudiar, trabajar y tener tiempo personal puede parecer un desafío. Cronos nace para ayudarte a planificar tus actividades de forma simple, visual y eficiente, dándote el control de tu tiempo.</p>
                 <p><b>Con Cronos vas a poder:</b></p>
                 <ul>
-                    <li>📅 Agendar tus actividades diarias indicando hora de inicio y de finalización.</li>
-                    <li>⏰ Configurar recordatorios inteligentes para que nunca olvides una reunión, una entrega o incluso un momento personal importante.</li>
-                    <li>📊 Visualizar tu carga horaria con gráficos intuitivos, que te muestran de un vistazo cómo estás distribuyendo tu tiempo.</li>
-                    <li>🔔 Recibir notificaciones claras y oportunas, para mantenerte siempre al día sin estrés.</li>
-                    <li>🎯 Planificar tu semana de manera equilibrada, combinando estudio, trabajo y ocio.</li>
+                    <li><i class="fa-solid fa-calendar"></i> Agendar tus actividades diarias indicando hora de inicio y de finalización.</li>
+                    <li><i class="fa-solid fa-clock"></i> Configurar recordatorios inteligentes para que nunca olvides una reunión, una entrega o incluso un momento personal importante.</li>
+                    <li><i class="fa-solid fa-chart-area"></i> Visualizar tu carga horaria con gráficos intuitivos, que te muestran de un vistazo cómo estás distribuyendo tu tiempo.</li>
+                    <li><i class="fa-solid fa-bell"></i> Recibir notificaciones claras y oportunas, para mantenerte siempre al día sin estrés.</li>
+                    <li><i class="fa-solid fa-bolt"></i> Planificar tu semana de manera equilibrada, combinando estudio, trabajo y ocio.</li>
                 </ul>
                 <p>Ya sea que quieras organizar tus estudios, tus proyectos laborales o simplemente tu día a día, Cronos es tu aliado para:</p>
                 <ul>
@@ -135,84 +136,9 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                     <li><b>Mantener un orden claro y sin complicaciones.</b></li>
                     <li><b>Alcanzar tus metas con más tranquilidad y confianza.</b></li>
                 </ul>
-                <p>✨ Con Cronos, la organización deja de ser una carga y se convierte en una herramienta que te da más tiempo para lo que realmente importa.</p>
+                <p><i class="fa-solid fa-book-tanakh"></i> Con Cronos, la organización deja de ser una carga y se convierte en una herramienta que te da más tiempo para lo que realmente importa.</p>
             </div>
         </section>
-
-      <section class="contenidos1">
- <h1>¡Hola, <?php echo htmlspecialchars($usuarioSesion['nombre']); ?>! Ésta es información sobre tu día</h1>
-</section>
-
-<section class="contenidos2">
-      <!-- <p class="dash-subtitle">Resumen claro de tu día</p> -->
-  <section id="dashboardDiario" class="dashboard">
-
-    <!-- GRID PRINCIPAL -->
-    <div class="dashboard-grid">
-
-      <!-- HORAS LIBRES -->
-      <div class="dash-card" id="horasLibresCard">
-        <h3>Horas libres</h3>
-
-        <p id="horasLibres" class="horas-numero"></p>
-        <div class="horas-flex">
-          <div>
-             <canvas id="graficoHoras"></canvas>
-            <p id="consejoHoras" class="horas-consejo"></p>
-          </div>
-        </div>
-      </div>
-
-        <!-- ACTIVIDAD ACTUAL -->
-      <div class="dash-card" id="actividadActualCard">
-        <h3>Actividad actual <i class="fa-regular fa-clock"></i></h3> 
-        <div id="actividadActual" class="dash-card-body"></div>
-      </div>
-
-      <!-- PROXIMA ACTIVIDAD -->
-      <div class="dash-card" id="proximaActividadCard">
-        <h3>Próxima actividad</h3>
-        <div id="proximaActividad" class="dash-card-body"></div>
-      </div>
-
-      <!-- GRAFICO PRINCIPAL -->
-      <div class="dash-card wide" id="graficoActividadesCard">
-        <h3>Distribución del día</h3>
-        <canvas id="graficoActividades"></canvas>
-        <div id="leyendaDonut" class="leyenda-donut"></div>
-
-      </div>
-
-      <!-- TAREAS DEL DÍA -->
-      <div class="dash-card wide" id="tareasDiaCard">
-        <h3>Tareas del día</h3>
-        <ul id="tareasDia" class="dash-list"></ul>
-      </div>
-
-      <!-- PROGRESO DEL DÍA -->
-<div class="dash-card" id="progresoDiaCard">
-    <h3>Progreso del día</h3>
-
-    <div class="progreso-wrapper">
-        <div id="progresoBarra"></div>
-    </div>
-
-    <p id="progresoTexto" class="progreso-texto">0% completado</p>
-</div>
-
-
-      <!-- ACTIVIDADES IMPORTANTES -->
-      <div class="dash-card wide" id="actividadesImportantesCard">
-        <h3>Actividades importantes</h3>
-        <ul id="actividadesImportantes" class="dash-list importantes"></ul>
-      </div>
-
-    </div>
-  </section>
-            </section>
-
-
-       
 
         <div class="contenidos" id="actividades">
             <section class="contenidos1">
@@ -468,6 +394,63 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
 
+        <section class="contenidos" id="dashboard">
+            <div class="contenidos1">
+                <h1>Dashboard diario <i class="fa-solid fa-gamepad"></i></h1>
+            </div>
+            <div class="contenidos2">
+                <section id="dashboardDiario" class="dashboard">
+                    <div class="dashboard-grid">
+                        <div class="dash-card" id="horasLibresCard">
+                            <h3>Horas libres</h3>
+
+                            <p id="horasLibres" class="horas-numero"></p>
+                            <div class="horas-flex">
+                                <div>
+                                    <canvas id="graficoHoras"></canvas>
+                                    <p id="consejoHoras" class="horas-consejo"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dash-card" id="actividadActualCard">
+                            <h3>Actividad actual <i class="fa-regular fa-clock"></i></h3>
+                            <div id="actividadActual" class="dash-card-body"></div>
+                        </div>
+
+                        <div class="dash-card" id="proximaActividadCard">
+                            <h3>Próxima actividad</h3>
+                            <div id="proximaActividad" class="dash-card-body"></div>
+                        </div>
+
+                        <div class="dash-card wide" id="graficoActividadesCard">
+                            <h3>Distribución del día</h3>
+                            <canvas id="graficoActividades"></canvas>
+                            <div id="leyendaDonut" class="leyenda-donut"></div>
+                        </div>
+
+                        <div class="dash-card wide" id="tareasDiaCard">
+                            <h3>Tareas del día</h3>
+                            <ul id="tareasDia" class="dash-list"></ul>
+                        </div>
+
+                        <div class="dash-card" id="progresoDiaCard">
+                            <h3>Progreso del día</h3>
+                            <div class="progreso-wrapper">
+                                <div id="progresoBarra"></div>
+                            </div>
+                            <p id="progresoTexto" class="progreso-texto">0% completado</p>
+                        </div>
+
+                        <div class="dash-card wide" id="actividadesImportantesCard">
+                            <h3>Actividades importantes</h3>
+                            <ul id="actividadesImportantes" class="dash-list importantes"></ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
         <div class="contenidos" id="graficos">
             <section class="contenidos1">
                 <h1>Gráfico semanal <i class="fa-solid fa-calendar-days"></i></h1>
@@ -557,34 +540,6 @@ $actividades = $actividadController->getByUsuario($id_usuario);
             </section>
         </div>
     </div>
-
- <!-- Fondo blur del modal -->
-<div id="fondoBlurIntro" class="fondoBlurModal"></div>
-
-<!-- Modal confirmar ocultar intro -->
-<div id="modalIntro" class="cuentaDatosCss modalOcultar">
-  <span id="cerrarModalIntro" class="cerrarMenu">&times;</span>
-
-  <h2 class="cent subrayado">Ocultar introducción</h2>
-
-  <p style="margin-top: 20px; text-align:center;">
-    ¿Querés ocultar la información introductoria?
-  </p>
-
-  <div class="cent2">
-    <div class="contenedorBotones">
-      <form id="formIntroConfirmar" class="espaciar" onsubmit="return false;">
-        <input type="submit" value="Ocultar introducción">
-      </form>
-
-      <form id="formIntroCancelar" class="espaciar" onsubmit="return false;">
-        <input type="submit" value="Cancelar">
-      </form>
-    </div>
-  </div>
-</div>
-
-
 
     <footer id="creditos">
         <div class="footerContenido">

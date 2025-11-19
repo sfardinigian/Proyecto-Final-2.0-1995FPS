@@ -921,6 +921,10 @@ th:last-child {
     scroll-margin-top: 140px;
 }
 
+#dashboard {
+    scroll-margin-top: 140px;
+}
+
 /* Cartel de no visualización de gráficos extensos */
 .graficoNoV {
     display: none;
@@ -1045,8 +1049,8 @@ body.dark {
 @media (max-width: 1200px) {
 
     .b1 {
-        font-size: 15px;
-        padding: 24px 10px;
+        font-size: 14px;
+        padding: 24px 5px;
     }
 
     .b1::after {
@@ -1100,29 +1104,29 @@ body.dark {
 
     /* Elementos del header */
     .logoPrincipal {
-        height: 65px;
-        width: 65px;
-        top: 10px;
-        left: 10px;
+        height: 55px;
+        width: 55px;
+        top: 7px;
+        left: 7px;
     }
 
     .logoC {
-        height: 100px;
-        width: 100px;
-        border-bottom-right-radius: 80px;
+        height: 80px;
+        width: 80px;
+        border-bottom-right-radius: 60px;
     }
 
     .cuentaC {
-        width: 100px;
-        height: 100px;
-        border-bottom-left-radius: 80px;
+        width: 80px;
+        height: 80px;
+        border-bottom-left-radius: 60px;
     }
 
     .cuentaLogo {
-        height: 65px;
-        width: 65px;
-        top: 10px;
-        right: 10px;
+        height: 55px;
+        width: 55px;
+        top: 7px;
+        right: 7px;
     }
 
     .b1 {
@@ -1131,7 +1135,7 @@ body.dark {
 
     .b2 {
         display: flex;
-        padding: 20px 5px;
+        padding: 20px 2px;
     }
 
     .botonesIn {
@@ -1381,7 +1385,6 @@ body.dark {
 
 .resumen-informativo:hover {
     transform: translateY(7px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .resumen-informativo h3 {
@@ -1494,47 +1497,38 @@ footer {
     z-index: 99999;
 }
 
-
 /* Botón primario: acción principal */
-.btnPrimario .btnSecundario{
-
-  border: none;
-  border-radius: 30px;
-  height: 50px;
-  width: 150px;
-  font-size: large;
-  transition: 0.3s;
-  background-color: var(--fondoBoton);
-  color: var(--textoBoton);
-
-
+.btnPrimario .btnSecundario {
+    border: none;
+    border-radius: 30px;
+    height: 50px;
+    width: 150px;
+    font-size: large;
+    transition: 0.3s;
+    background-color: var(--fondoBoton);
+    color: var(--textoBoton);
 }
 
-.btnPrimario .btnSecundario:hover{
-
-  transform: scale(1.05);
-  cursor: pointer;
+.btnPrimario .btnSecundario:hover {
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 .contenedorBotones {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 30px;
-  width: 100%;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
 
-
-/* ========================= */
-/* DASHBOARD */
-/* ========================= */
+/* ------------- Dashboard ------------- */
 
 .dashboard {
     display: flex;
@@ -1559,10 +1553,7 @@ footer {
     font-size: .9rem;
 }
 
-/* ========================= */
-/* GRID */
-/* ========================= */
-
+/* Grid */
 #dashboardDiario {
     margin-top: 10px;
 }
@@ -1573,38 +1564,29 @@ footer {
     gap: 1rem;
 }
 
-/* ========================= */
-/* TARJETAS */
-/* ========================= */
-
+/* Tarjetas */
 .dash-card {
     padding: 1rem 1.2rem;
     border-radius: 16px;
     backdrop-filter: blur(10px);
-
-    /* Color más suave, menos oscuro */
     background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255,255,255,0.3);
-
-    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     transition: 0.25s ease-in-out;
-
     display: flex;
     flex-direction: column;
     gap: .6rem;
-
-    /* Evita tarjetas gigantes */
     min-height: auto;
 }
 
 .dark .dash-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .dash-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .dash-card h3 {
@@ -1626,16 +1608,13 @@ footer {
     grid-column: span 2;
 }
 
-@media(max-width: 700px){
+@media(max-width: 700px) {
     .dash-card.wide {
         grid-column: span 1;
     }
 }
 
-/* ========================= */
-/* HORAS LIBRES */
-/* ========================= */
-
+/* Horas libres */
 .horas-flex {
     display: flex;
     justify-content: center;
@@ -1645,11 +1624,11 @@ footer {
     flex-wrap: nowrap;
 }
 
-.horas-flex > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;     /* Centra el canvas y el texto */
-  gap: 0.5rem;
+.horas-flex>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 
@@ -1670,11 +1649,12 @@ footer {
     max-width: 120px !important;
     max-height: 120px !important;
 }
-#horasLibres {font-size: 1.1rem;}
-/* ========================= */
-/* LISTAS */
-/* ========================= */
 
+#horasLibres {
+    font-size: 1.1rem;
+}
+
+/* Listas */
 .dash-list {
     list-style: none;
     padding: 0;
@@ -1687,36 +1667,32 @@ footer {
 .dash-list li {
     padding: .5rem .7rem;
     border-radius: 12px;
-    background: rgba(255,255,255,0.35);
+    background: rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(8px);
 }
 
 .dark .dash-list li {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .importantes li {
     border-left: 4px solid #ff4d4d;
 }
 
-/* ========================= */
-/* GRAFICO DONUT */
-/* ========================= */
-
+/* Gráfico donut */
 #graficoActividades {
     width: 100% !important;
     max-width: 300px;
     margin: 0 auto;
 }
 
-.actividad-vacia__icon 
-{
+.actividad-vacia__icon {
     text-align: center;
     align-items: center;
     margin-bottom: 10px;
 }
 
-/* Leyenda Donut */
+/* Leyenda donut */
 .leyenda-donut {
     display: flex;
     flex-direction: column;
@@ -1737,11 +1713,11 @@ footer {
     height: 14px;
     border-radius: 50%;
     display: inline-block;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .dark .leyenda-donut-color {
-    box-shadow: 0 1px 3px rgba(255,255,255,0.15);
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.15);
 }
 
 /* Contenedor de la tarjeta */
@@ -1762,13 +1738,10 @@ footer {
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
-    
-    background: rgba(0, 0, 0, 0.03);  /* suave, pro */
+    background: rgba(0, 0, 0, 0.03);
     border-radius: 8px;
-
     margin-bottom: 6px;
     font-size: 0.95rem;
-
     transition: background 0.2s ease;
 }
 
@@ -1786,38 +1759,38 @@ footer {
 
 /* Checkbox violeta */
 input.check-tarea {
-    accent-color: #8a2be2; /* Violeta de tu página */
+    accent-color: var(--fondoBoton);
     width: 18px;
     height: 18px;
     margin-right: 10px;
     cursor: pointer;
 }
 
-/* Opcional: mejorar apariencia en Firefox/Chrome */
+/* Mejorar apariencia en Firefox/Chrome */
 input.check-tarea:checked {
-    accent-color: #8a2be2; /* asegura que se vea violeta al marcar */
+    accent-color: var(--fondoBoton);
 }
 
 /* Tarjeta Progreso */
 .progreso-wrapper {
     width: 100%;
     height: 14px;
-    background: rgba(255,255,255,0.25);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.35);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     margin-top: .4rem;
 }
 
 .dark .progreso-wrapper {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 #progresoBarra {
     height: 100%;
     width: 0%;
-    background: #8a2be2;
+    background: var(--fondoBoton);
     transition: width .4s ease;
     border-radius: 20px;
 }
@@ -1826,4 +1799,63 @@ input.check-tarea:checked {
     font-size: .9rem;
     opacity: .8;
     margin-top: .4rem;
+}
+
+/* ------------- Cargador de index ------------- */
+#loader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #0e0e0f;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity .6s ease;
+}
+
+/* Logo girando */
+.logo-hourglass {
+    width: 120px;
+    height: 120px;
+    background-image: url("../img/logo_minioscuro_sinfondo.png"); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    animation: giroReloj 2.4s infinite ease-in-out;
+    filter: drop-shadow(0 0 10px #ffffff33);
+}
+
+/* Animación tipo reloj de arena */
+@keyframes giroReloj {
+    0% { transform: rotate(0deg); }
+    45% { transform: rotate(180deg); }
+    55% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Texto Cronos */
+.loader-title {
+    margin-top: 25px;
+    color: #ffffffd9;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    animation: fadeIn 1.8s ease forwards;
+    opacity: 0;
+}
+
+/* Fade */
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Ocultar loader */
+#loader.oculto {
+    opacity: 0;
+    pointer-events: none;
 }

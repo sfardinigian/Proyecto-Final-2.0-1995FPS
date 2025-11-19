@@ -217,12 +217,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             const porcentaje = ((valor / total) * 100).toFixed(1);
 
                             let mensaje = "";
-                            if (label === "Importante") mensaje = "🔥 Estas tareas requieren foco y planificación.";
-                            else if (label === "Normal") mensaje = "⚖️ Actividades regulares que mantienen tu flujo de trabajo. Gestionálas con constancia y equilibrio.";
-                            else mensaje = "🌿 Tareas livianas o de bajo impacto, aprovechá para recargar energía.";
+                            if (label === "Importante") mensaje = `<i class="fa-solid fa-fire"></i> Estas tareas requieren foco y planificación.`;
+                            else if (label === "Normal") mensaje = `<i class="fa-solid fa-mug-hot"></i> Actividades regulares que mantienen tu flujo de trabajo. Gestionálas con constancia y equilibrio.`;
+                            else mensaje = `<i class="fa-solid fa-feather"></i> Tareas livianas o de bajo impacto, aprovechá para recargar energía.`;
 
                             titulo.textContent = label;
-                            detalle.textContent = `${valor} tareas (${porcentaje}%). ${mensaje}`;
+                            detalle.innerHTML = `${valor} tareas (${porcentaje}%). ${mensaje}`;
                         }
                         else {
                             titulo.textContent = "Seleccioná una prioridad";
@@ -248,17 +248,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     switch (prioridadDominante) {
                         case "Importante":
-                            consejo = `🔴 Esta semana tenés muchas tareas importantes (${porcentajeDominante}%). Priorizá lo esencial y no te sobrecargues.`;
+                            consejo = `<i class="fa-solid fa-fire"></i> Esta semana tenés muchas tareas importantes (${porcentajeDominante}%). Priorizá lo esencial y no te sobrecargues.`;
                             break;
                         case "Normal":
-                            consejo = `🟠 La mayoría de tus tareas son normales (${porcentajeDominante}%). Buen balance, mantené tu productividad sin agotarte.`;
+                            consejo = `<i class="fa-solid fa-sliders"></i> La mayoría de tus tareas son normales (${porcentajeDominante}%). Buen balance, mantené tu productividad sin agotarte.`;
                             break;
                         case "Casual":
-                            consejo = `🟢 Semana liviana con más tareas casuales (${porcentajeDominante}%). Aprovechá para organizarte, descansar o adelantar proyectos.`;
+                            consejo = `<i class="fa-solid fa-tree"></i> Semana liviana con más tareas casuales (${porcentajeDominante}%). Aprovechá para organizarte, descansar o adelantar proyectos.`;
                             break;
                     }
 
-                    mensajeGeneral.textContent = consejo;
+                    mensajeGeneral.innerHTML = consejo;
 
                 } else {
                     // Empate entre varias prioridades
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         : ultima;
 
                     const porcentajeEmpate = ((maxCount / total) * 100).toFixed(1);
-                    let consejoEmpate = `⚖️ Tenés un empate entre ${lista} — cada una con ${maxCount} actividad(es) (${porcentajeEmpate}% del total). `;
+                    let consejoEmpate = `<i class="fa-solid fa-gears"></i> Tenés un empate entre ${lista} — cada una con ${maxCount} actividad(es) (${porcentajeEmpate}% del total). `;
 
                     if (prioridadesEmpatadas.includes("Importante") || ultima === "Importante") {
                         consejoEmpate += "Dado que incluye tareas importantes, priorizá terminar esas primero y si te sentís sobrecargado delegá o reprogramá lo que consideres necesario";
@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         consejoEmpate += "Semana tranquila: aprovechá para descansar, planificar o avanzar en tareas a largo plazo.";
                     }
 
-                    mensajeGeneral.textContent = consejoEmpate;
+                    mensajeGeneral.innerHTML = consejoEmpate;
                 }
 
                 document.getElementById("resumenGeneral").classList.add("visible");
@@ -548,17 +548,17 @@ document.addEventListener("DOMContentLoaded", function () {
             let mensaje = "";
 
             if (diasConActividades === 1) {
-                mensaje = `🕐 <b>Actividad puntual:</b> solo registraste tareas el ${data[0].dia}.`;
+                mensaje = `<i class="fa-solid fa-clock"></i> <b>Actividad puntual:</b> solo registraste tareas el ${data[0].dia}.`;
             } else if (diasConActividades === 2) {
-                mensaje = `📅 <b>Actividad ligera:</b> solo tuviste tareas en dos días (${data[0].dia} y ${data[1].dia}).`;
+                mensaje = `<i class="fa-solid fa-calendar"></i> <b>Actividad ligera:</b> solo tuviste tareas en dos días (${data[0].dia} y ${data[1].dia}).`;
             } else if (maxHoras - minHoras < 1 && diasConActividades > 2) {
-                mensaje = "📊 <b>Semana equilibrada:</b> mantuviste una buena distribución de tiempo.";
+                mensaje = `<i class="fa-solid fa-sliders"></i> <b>Semana equilibrada:</b> mantuviste una buena distribución de tiempo.`;
             } else if (maxHoras > promedio * 1.5) {
-                mensaje = `🔥 <b>Semana intensa:</b> el día más cargado es ${diaMax} (${maxHoras.toFixed(1)}h). Recordá equilibrar tu descanso.`;
+                mensaje = `<i class="fa-solid fa-fire"></i> <b>Semana intensa:</b> el día más cargado es ${diaMax} (${maxHoras.toFixed(1)}h). Recordá equilibrar tu descanso.`;
             } else if (minHoras === 0) {
-                mensaje = `⚖️ <b>Día libre detectado:</b> no hubo actividades el ${diaMin}. Aprovechalo para planificar o descansar.`;
+                mensaje = `<i class="fa-solid fa-cloud"></i> <b>Día libre detectado:</b> no hubo actividades el ${diaMin}. Aprovechalo para planificar o descansar.`;
             } else {
-                mensaje = `✅ <b>Semana con buena actividad:</b> promedio de ${promedio.toFixed(1)}h diarias.`;
+                mensaje = `<i class="fa-solid fa-check"></i> <b>Semana con buena actividad:</b> promedio de ${promedio.toFixed(1)}h diarias.`;
             }
 
             tituloElem.textContent = "Resumen semanal";
@@ -613,7 +613,6 @@ function actualizarColoresGrafico() {
 
         chartInformativo.update();
     }
-
 }
 
 // ------------------------------ Animación de partículas de relojes ------------------------------
@@ -647,53 +646,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const introInfo = document.getElementById("introInfo");
-  const cerrarIntro = document.getElementById("cerrarIntro");
-
-  const modalIntro = document.getElementById("modalIntro");
-  const fondoBlurIntro = document.getElementById("fondoBlurIntro");
-
-  const cerrarModalIntro = document.getElementById("cerrarModalIntro");
-
-  const formIntroCancelar = document.getElementById("formIntroCancelar");
-  const formIntroConfirmar = document.getElementById("formIntroConfirmar");
-
-  // Abrir modal al tocar la X de la intro
-  cerrarIntro.addEventListener("click", () => {
-    modalIntro.classList.add("activo");
-    fondoBlurIntro.classList.add("activo");
-  });
-
-  // Cerrar modal
-  const cerrar = () => {
-    modalIntro.classList.remove("activo");
-    fondoBlurIntro.classList.remove("activo");
-  };
-
-  cerrarModalIntro.addEventListener("click", cerrar);
-  formIntroCancelar.addEventListener("submit", cerrar);
-
-  // Confirmar ocultar
-  formIntroConfirmar.addEventListener("submit", () => {
-    introInfo.style.display = "none";
-    cerrar();
-  });
-});
-
 // ------------------------------ Dashboard ------------------------------
+
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/actividadActualRouter.php")
-  .then(res => {
-    if (!res.ok) throw new Error("Network response was not ok");
-    return res.json();
-  })
-  .then(data => {
-    const cont = document.getElementById("actividadActual");
+        .then(res => {
+            if (!res.ok) throw new Error("Network response was not ok");
+            return res.json();
+        })
+        .then(data => {
+            const cont = document.getElementById("actividadActual");
 
-    // Si viene null o no tiene título, mostramos vista vacía
-    if (!data || typeof data !== 'object' || !data.titulo) {
-      cont.innerHTML = `
+            // Si viene null o no tiene título, mostramos vista vacía
+            if (!data || typeof data !== 'object' || !data.titulo) {
+                cont.innerHTML = `
         <div class="actividad-vacia">
           </div>
           <div class="actividad-vacia__texto">
@@ -702,11 +668,11 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       `;
-      return;
-    }
+                return;
+            }
 
-    // Si hay actividad, render normal
-    cont.innerHTML = `
+            // Si hay actividad, render normal
+            cont.innerHTML = `
       <div class="actividad-activa">
         <div class="actividad-activa__left">
           <span class="actividad-color" style="background:${data.color || '#888'}"></span>
@@ -718,24 +684,23 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     `;
-  })
-  .catch(err => {
-    console.error("Error al cargar actividad actual:", err);
-    const cont = document.getElementById("actividadActual");
-    cont.innerHTML = `<p class="actividad-error">Error cargando la actividad.</p>`;
-  });
+        })
+        .catch(err => {
+            console.error("Error al cargar actividad actual:", err);
+            const cont = document.getElementById("actividadActual");
+            cont.innerHTML = `<p class="actividad-error">Error cargando la actividad.</p>`;
+        });
 
-/* Helper básico para evitar inyección / caracteres raros en HTML interpolado */
-function escapeHtml(str) {
-  if (!str && str !== 0) return '';
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
+    /* Helper básico para evitar inyección / caracteres raros en HTML interpolado */
+    function escapeHtml(str) {
+        if (!str && str !== 0) return '';
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -793,7 +758,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ul.querySelectorAll('.check-tarea').forEach(input => {
                 input.addEventListener('change', (e) => {
                     const titulo = e.target.nextElementSibling;
-                    if(e.target.checked){
+                    if (e.target.checked) {
                         titulo.style.textDecoration = 'line-through';
                         titulo.style.opacity = '.6';
                     } else {
@@ -810,15 +775,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/horasLibresRouter.php")
         .then(res => res.json())
         .then(data => {
             const elemLibres = document.getElementById("horasLibres");
             const elemConsejo = document.getElementById("consejoHoras");
-            const elemGrafico = document.getElementById("graficoHoras"); // div canvas para mini gráfico
+            const elemGrafico = document.getElementById("graficoHoras");
 
             const horasLibres = (data.libres / 60).toFixed(2);
             const horasOcupadas = (data.ocupados / 60).toFixed(2);
@@ -830,20 +793,20 @@ document.addEventListener("DOMContentLoaded", () => {
             // Consejo más detallado según porcentaje
             let consejo = "";
             if (porcentajeOcupado >= 90) {
-                consejo = "🔥 Día extremadamente ocupado. Considerá delegar tareas y descansar bien.";
+                consejo = `<i class="fa-solid fa-circle-exclamation"></i> Día extremadamente ocupado. Considerá delegar tareas y descansar bien.`;
             } else if (porcentajeOcupado >= 75) {
-                consejo = "⚠️ Día muy ocupado. Prioriza lo urgente y no te sobrecargues.";
+                consejo = `<i class="fa-solid fa-bolt"></i> Día muy ocupado. Prioriza lo urgente y no te sobrecargues.`;
             } else if (porcentajeOcupado >= 50) {
-                consejo = "🟠 Día equilibrado pero con carga significativa. Planificá pausas estratégicas.";
+                consejo = `<i class="fa-solid fa-briefcase"></i> Día equilibrado pero con carga significativa. Planificá pausas estratégicas.`;
             } else if (porcentajeOcupado >= 25) {
-                consejo = "🟢 Día relajado. Aprovechá para avanzar en proyectos personales o descansar.";
+                consejo = `<i class="fa-solid fa-mug-hot"></i> Día relajado. Aprovechá para avanzar en proyectos personales o descansar.`;
             } else {
-                consejo = "🌿 Día muy tranquilo. Ideal para organizar y planificar la semana.";
+                consejo = `<i class="fa-solid fa-cloud"></i> Día muy tranquilo. Ideal para organizar y planificar la semana.`;
             }
 
-            elemConsejo.innerText = consejo;
+            elemConsejo.innerHTML = consejo;
 
-            // Mini gráfico tipo doughnut para representar porcentaje
+            // Gráfico donut para representar porcentaje
             if (elemGrafico) {
                 const ctx = elemGrafico.getContext("2d");
                 new Chart(ctx, {
@@ -857,7 +820,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }]
                     },
                     options: {
-                         responsive: false,
+                        responsive: false,
                         cutout: "70%",
                         plugins: {
                             legend: { display: false },
@@ -872,7 +835,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -939,12 +901,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         })
+
         .catch(err => console.error("Error Donut:", err));
-
 });
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("../routers/importantesRouter.php")
@@ -965,4 +924,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
+// ------------------------------ Pantalla de carga de index ------------------------------
 
+document.addEventListener("DOMContentLoaded", () => {
+    const TIEMPO_LOADER = 2500;
+
+    setTimeout(() => {
+        const loader = document.getElementById("loader");
+        const contenido = document.getElementById("contenido");
+
+        loader.classList.add("oculto");
+        contenido.style.display = "block";
+
+        setTimeout(() => loader.remove(), 800);
+    }, TIEMPO_LOADER);
+});

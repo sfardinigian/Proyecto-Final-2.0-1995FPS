@@ -1,12 +1,12 @@
 <?php
+// Clave para la funcionalidad de los días locales
 date_default_timezone_set('America/Argentina/Buenos_Aires');
+
 require_once __DIR__ . '/../models/Dashboard.php';
 
 class DashboardController
 {
-    /* =============================
-       ACTIVIDADES DEL DÍA
-       ============================= */
+    // Actividades del día
     public function obtenerTareasDia()
     {
         $dashboard = new Dashboard;
@@ -16,9 +16,7 @@ class DashboardController
         return $dashboard->getTasksOfDay($id_usuario, $diaActual);
     }
 
-    /* =============================
-       ACTIVIDAD ACTUAL
-       ============================= */
+    // Actividad actual
     public function obtenerActividadActual()
     {
         $dashboard = new Dashboard;
@@ -30,9 +28,7 @@ class DashboardController
         return $dashboard->getCurrentActivity($id_usuario, $diaActual, $horaActual);
     }
 
-    /* =============================
-       PRÓXIMA ACTIVIDAD
-       ============================= */
+    // Próxima actividad
     public function obtenerProximaActividad()
     {
         $dashboard = new Dashboard;
@@ -44,9 +40,7 @@ class DashboardController
         return $dashboard->getNextActivity($id_usuario, $diaActual, $horaActual);
     }
 
-    /* =============================
-       ACTIVIDADES IMPORTANTES
-       ============================= */
+    // Actividades importantes
     public function obtenerImportantes()
     {
         $dashboard = new Dashboard;
@@ -56,9 +50,7 @@ class DashboardController
         return $dashboard->getImportantActivities($id_usuario, $diaActual);
     }
 
-    /* =============================
-       HORAS LIBRES VS OCUPADAS
-       ============================= */
+    // Horas libres vs ocupadas
     public function obtenerHoras()
     {
         $dashboard = new Dashboard;
@@ -68,9 +60,7 @@ class DashboardController
         return $dashboard->getHoursStats($id_usuario, $diaActual);
     }
 
-    /* =============================
-       GRÁFICO DONUT
-       ============================= */
+    // Gráfico donut
     public function obtenerDonut()
     {
         $dashboard = new Dashboard;
@@ -80,24 +70,12 @@ class DashboardController
         return $dashboard->getDonutData($id_usuario, $diaActual);
     }
 
-    /* =============================
-       TRADUCIR EL DÍA A ENTERO
-       ESTE ES CLAVE 🔥
-       ============================= */
+    // Traducir el día a entero
     private function getDiaSemana()
     {
-        // date("N") -> 1 (lunes) ... 7 (domingo)
         $numero = date('N');
 
-        $dias = [
-            1 => 'Lunes',
-            2 => 'Martes',
-            3 => 'Miércoles',
-            4 => 'Jueves',
-            5 => 'Viernes',
-            6 => 'Sábado',
-            7 => 'Domingo'
-        ];
+        $dias = [1 => 'Lunes', 2 => 'Martes', 3 => 'Miércoles', 4 => 'Jueves', 5 => 'Viernes', 6 => 'Sábado', 7 => 'Domingo'];
 
         return $dias[$numero];
     }

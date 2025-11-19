@@ -11,17 +11,13 @@ class Dashboard
         $this->db = $connection->connect();
     }
 
-    /* =============================
-       ACTIVIDADES DEL DÍA
-       ============================= */
-
     // Obtener todas las actividades del día actual
     public function getTasksOfDay($id_usuario, $dia)
     {
         $query = "SELECT id_actividad, titulo, hora_inicio, hora_fin, color, prioridad
-                  FROM actividades
-                  WHERE id_usuario = ? AND dia = ?
-                  ORDER BY hora_inicio ASC";
+                         FROM actividades
+                         WHERE id_usuario = ? AND dia = ?
+                         ORDER BY hora_inicio ASC";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('is', $id_usuario, $dia);
@@ -37,69 +33,55 @@ class Dashboard
         return $data ?: [];
     }
 
+    // Actividad actual
+    public function getCurrentActivity($id_usuario, $dia, $horaActual)
+    {
+        $query = "SELECT id_actividad, titulo, hora_inicio, hora_fin, color, prioridad
+                         FROM actividades
+                         WHERE id_usuario = ?
+                         AND dia = ?
+                         AND hora_inicio <= ?
+                         AND hora_fin >= ?
+                         LIMIT 1";
 
-    /* =============================
-       ACTIVIDAD ACTUAL
-       ============================= */
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iiss', $id_usuario, $dia, $horaActual, $horaActual);
+        $stmt->execute();
 
-     public function getCurrentActivity($id_usuario, $dia, $horaActual)
-{
-    $query = "SELECT id_actividad, titulo, hora_inicio, hora_fin, color, prioridad
-              FROM actividades
-              WHERE id_usuario = ?
-                AND dia = ?
-                AND hora_inicio <= ?
-                AND hora_fin >= ?
-              LIMIT 1";
+        $result = $stmt->get_result()->fetch_assoc();
 
-    $stmt = $this->db->prepare($query);
-    $stmt->bind_param('iiss', $id_usuario, $dia, $horaActual, $horaActual);
-    $stmt->execute();
+        return $result ?: null;
+    }
 
-    $result = $stmt->get_result()->fetch_assoc();
-
-    return $result ?: null;  // <-- LISTO
-}
-
-
-
-
-    /* =============================
-       PRÓXIMA ACTIVIDAD
-       ============================= */
-
+    // Próxima actividad
     public function getNextActivity($id_usuario, $dia, $horaActual)
     {
         $query = "SELECT id_actividad, titulo, hora_inicio, hora_fin, color, prioridad
-                  FROM actividades
-                  WHERE id_usuario = ?
-                    AND dia = ?
-                    AND hora_inicio > ?
-                  ORDER BY hora_inicio ASC
-                  LIMIT 1";
+                         FROM actividades
+                         WHERE id_usuario = ?
+                         AND dia = ?
+                         AND hora_inicio > ?
+                         ORDER BY hora_inicio ASC
+                         LIMIT 1";
 
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iis', $id_usuario, $dia, $horaActual);
+        $stmt->bind_param('iss', $id_usuario, $dia, $horaActual);
         $stmt->execute();
 
         return $stmt->get_result()->fetch_assoc() ?: null;
     }
 
-
-    /* =============================
-       ACTIVIDADES IMPORTANTES
-       ============================= */
-
+    // Actividades importantes
     public function getImportantActivities($id_usuario, $dia)
     {
         $prioridad = "importante";
 
         $query = "SELECT id_actividad, titulo, hora_inicio, hora_fin, color, prioridad
-                  FROM actividades
-                  WHERE id_usuario = ?
-                    AND dia = ?
-                    AND prioridad = ?
-                  ORDER BY hora_inicio ASC";
+                         FROM actividades
+                         WHERE id_usuario = ?
+                         AND dia = ?
+                         AND prioridad = ?
+                         ORDER BY hora_inicio ASC";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iss', $id_usuario, $dia, $prioridad);
@@ -115,16 +97,12 @@ class Dashboard
         return $data ?: [];
     }
 
-
-    /* =============================
-       HORAS LIBRES Y OCUPADAS
-       ============================= */
-
+    // Horas libres y ocupadas
     public function getHoursStats($id_usuario, $dia)
     {
         $query = "SELECT hora_inicio, hora_fin
-                  FROM actividades
-                  WHERE id_usuario = ? AND dia = ?";
+                         FROM actividades
+                         WHERE id_usuario = ? AND dia = ?";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('is', $id_usuario, $dia);
@@ -141,24 +119,17 @@ class Dashboard
             $ocupados += ($fin - $inicio) / 60;
         }
 
-        return [
-            'ocupados' => $ocupados,
-            'libres' => $totalMinutosDia - $ocupados
-        ];
+        return ['ocupados' => $ocupados, 'libres' => $totalMinutosDia - $ocupados];
     }
 
-
-    /* =============================
-       DATOS PARA GRÁFICO DONUT
-       ============================= */
-
+    // Datos para el gráfico de donut
     public function getDonutData($id_usuario, $dia)
     {
         $query = "SELECT titulo, color,
                          SUM(TIMESTAMPDIFF(MINUTE, hora_inicio, hora_fin)) AS minutos
-                  FROM actividades
-                  WHERE id_usuario = ? AND dia = ?
-                  GROUP BY titulo";
+                         FROM actividades
+                         WHERE id_usuario = ? AND dia = ?
+                         GROUP BY titulo";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('is', $id_usuario, $dia);

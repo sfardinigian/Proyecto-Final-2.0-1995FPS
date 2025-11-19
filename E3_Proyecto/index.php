@@ -54,96 +54,103 @@ if (!isset($_SESSION['usuario']) && isset($_COOKIE['usuario_id'], $_COOKIE['usua
 </head>
 
 <body>
-    <div id="particulasRelojes"></div>
-    
-    <div class="modoContainer">
-        <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
-        <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
+    <div id="loader">
+        <div class="logo-hourglass"></div>
+        <h1 class="loader-title">CRONOS</h1>
     </div>
 
-    <div class="contBody">
-        <div class="contRegIn">
-            <h1>Bienvenido</h1>
+    <div id="contenido" style="display:none;">
+        <div id="particulasRelojes"></div>
 
-            <?php if (isset($_GET['error'])): ?>
-                <div style="color: red;">
-                    <?php
-                    switch ($_GET['error']) {
-                        case 'nombre':
-                            echo "El nombre sólo debe tener letras.<br><br>";
-                            break;
-                        case 'apellido':
-                            echo "El apellido sólo debe tener letras.<br><br>";
-                            break;
-                        case 'email':
-                            echo "El correo electrónico no es válido.<br><br>";
-                            break;
-                        case 'pass':
-                            echo "La contraseña debe tener al menos 8 caracteres, incluir letras y números.<br><br>";
-                            break;
-                        case 'passNoCoincide':
-                            echo "Las contraseñas no coinciden.<br><br>";
-                            break;
-                        case 'emailExiste':
-                            echo "El correo electrónico ya está registrado.<br><br>";
-                            break;
-                        case 'desconocido':
-                            echo "Ha ocurrido un error desconocido.<br><br>";
-                            break;
-                    }
-                    ?>
-                </div>
-            <?php endif; ?>
+        <div class="modoContainer">
+            <span id="iconoSol" class="modoIcono"><i class="fa-solid fa-sun"></i></span>
+            <span id="iconoLuna" class="modoIcono"><i class="fa-solid fa-moon"></i></span>
+        </div>
 
-            <?php if (isset($_GET['ok'])): ?>
-                <div style="color: rgb(0, 153, 0);">
-                    <?php
-                    switch ($_GET['ok']) {
-                        case 'cuentaEliminada':
-                            echo "¡Cuenta eliminada con éxito!<br><br>";
-                            break;
-                    }
-                    ?>
-                </div>
-            <?php endif; ?>
+        <div class="contBody">
+            <div class="contRegIn">
+                <h1>Bienvenido</h1>
 
-            <form action="controllers/usuarioController.php" method="post">
-                <input type="text" name="nombre" placeholder=" Nombre" required><br>
-                <input type="text" name="apellido" placeholder=" Apellido" required><br>
-                <input type="email" name="email" placeholder=" Correo electrónico" required><br>
+                <?php if (isset($_GET['error'])): ?>
+                    <div style="color: red;">
+                        <?php
+                        switch ($_GET['error']) {
+                            case 'nombre':
+                                echo "El nombre sólo debe tener letras.<br><br>";
+                                break;
+                            case 'apellido':
+                                echo "El apellido sólo debe tener letras.<br><br>";
+                                break;
+                            case 'email':
+                                echo "El correo electrónico no es válido.<br><br>";
+                                break;
+                            case 'pass':
+                                echo "La contraseña debe tener al menos 8 caracteres, incluir letras y números.<br><br>";
+                                break;
+                            case 'passNoCoincide':
+                                echo "Las contraseñas no coinciden.<br><br>";
+                                break;
+                            case 'emailExiste':
+                                echo "El correo electrónico ya está registrado.<br><br>";
+                                break;
+                            case 'desconocido':
+                                echo "Ha ocurrido un error desconocido.<br><br>";
+                                break;
+                        }
+                        ?>
+                    </div>
+                <?php endif; ?>
 
-                <br>
+                <?php if (isset($_GET['ok'])): ?>
+                    <div style="color: rgb(0, 153, 0);">
+                        <?php
+                        switch ($_GET['ok']) {
+                            case 'cuentaEliminada':
+                                echo "¡Cuenta eliminada con éxito!<br><br>";
+                                break;
+                        }
+                        ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="inputContainer">
-                    <input id="contrasenia" type="password" name="pass" placeholder=" Contraseña" required>
-                    <i class="fa-solid fa-eye togglePass"></i>
-                </div>
+                <form action="controllers/usuarioController.php" method="post">
+                    <input type="text" name="nombre" placeholder=" Nombre" required><br>
+                    <input type="text" name="apellido" placeholder=" Apellido" required><br>
+                    <input type="email" name="email" placeholder=" Correo electrónico" required><br>
 
-                <div class="inputContainer">
-                    <input type="password" name="pass2" placeholder=" Repita la contraseña" required>
-                    <i class="fa-solid fa-eye togglePass"></i>
-                </div>
+                    <br>
 
-                <div class="cen">
-                    <div class="validPass">
-                        <div class="validPassH">
-                            <h4>La contraseña debe contener</h4>
-                        </div>
+                    <div class="inputContainer">
+                        <input id="contrasenia" type="password" name="pass" placeholder=" Contraseña" required>
+                        <i class="fa-solid fa-eye togglePass"></i>
+                    </div>
 
-                        <div class="validPassP">
-                            <div id="longitud" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 8 caracteres</div>
-                            <div id="numero" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 número</div>
-                            <div id="letra" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 letra</div>
+                    <div class="inputContainer">
+                        <input type="password" name="pass2" placeholder=" Repita la contraseña" required>
+                        <i class="fa-solid fa-eye togglePass"></i>
+                    </div>
+
+                    <div class="cen">
+                        <div class="validPass">
+                            <div class="validPassH">
+                                <h4>La contraseña debe contener</h4>
+                            </div>
+
+                            <div class="validPassP">
+                                <div id="longitud" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 8 caracteres</div>
+                                <div id="numero" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 número</div>
+                                <div id="letra" class="requerimiento"><i class="fa-solid fa-circle-xmark"></i> 1 letra</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <input type="submit" value="Registrarse" name="registrar" id="boton">
+                    <input type="submit" value="Registrarse" name="registrar" id="boton">
 
-                <p>¿Ya tienes una cuenta?</p>
+                    <p>¿Ya tienes una cuenta?</p>
 
-                <a href="views/inicio.php">Iniciar sesión</a>
-            </form>
+                    <a href="views/inicio.php">Iniciar sesión</a>
+                </form>
+            </div>
         </div>
     </div>
 </body>
