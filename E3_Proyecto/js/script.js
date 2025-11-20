@@ -677,7 +677,7 @@ document.addEventListener("DOMContentLoaded", () => {
                               </div>
                               <div class="actividad-activa__body">
                               <h4 class="actividad-titulo">${escapeHtml(data.titulo)}</h4>
-                              <p class="actividad-hora">${escapeHtml(data.hora_inicio)} - ${escapeHtml(data.hora_fin)}</p>
+                              <p class="actividad-hora">${escapeHtml(data.hora_inicio.substring(0, 5))} - ${escapeHtml(data.hora_fin.substring(0, 5))}</p>
                               <p class="actividad-prioridad">${escapeHtml(data.prioridad || '')}</p>
                               </div>
                               </div>`;
@@ -712,10 +712,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            cont.innerHTML = `
-                <h4>${data.titulo}</h4>
-                <p>${data.hora_inicio} - ${data.hora_fin}</p>
-            `;
+            cont.innerHTML = `<h4>${data.titulo}</h4>
+                              <p>${data.hora_inicio.substring(0, 5)} - ${data.hora_fin.substring(0, 5)}</p>`;
         });
 });
 
@@ -813,7 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         labels: ["Ocupadas", "Libres"],
                         datasets: [{
                             data: [porcentajeOcupado, 100 - porcentajeOcupado],
-                            backgroundColor: ["#ff4d4d", "#4caf50"],
+                            backgroundColor: ["red", "#aeaeaeff"],
                             borderWidth: 0
                         }]
                     },
@@ -857,7 +855,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const porcentajeLibre = ((totalMinutosDia - minutosActividades) / totalMinutosDia * 100);
             labels.push("Horas libres");
             valores.push(porcentajeLibre);
-            colores.push("#d3d3d3");
+            colores.push("#aeaeaeff");
 
             const textoColor = getComputedStyle(document.body)
                 .getPropertyValue("--textoColor")
@@ -916,7 +914,7 @@ document.addEventListener("DOMContentLoaded", () => {
             lista.forEach(act => {
                 ul.innerHTML += `<li style="border-left: 4px solid ${act.color}; padding-left: 8px;">
                                  <strong>${act.titulo}</strong>
-                                 (${act.hora_inicio} - ${act.hora_fin})
+                                 (${act.hora_inicio.substring(0, 5)} - ${act.hora_fin.substring(0, 5)})
                                  </li>`;
             });
         });

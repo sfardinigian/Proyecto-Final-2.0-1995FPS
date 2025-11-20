@@ -413,7 +413,7 @@ $actividades = $actividadController->getByUsuario($id_usuario);
                         </div>
 
                         <div class="dash-card" id="actividadActualCard">
-                            <h3>Actividad actual <i class="fa-regular fa-clock"></i></h3>
+                            <h3>Actividad actual</h3>
                             <div id="actividadActual" class="dash-card-body"></div>
                         </div>
 
